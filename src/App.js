@@ -34,13 +34,19 @@ componentDidMount() {
 
     console.log('render');
     return (
-      <div className="App">
+       <div className="App">
           <input className='search-box' type='search'
            placeholder='monster' 
            onChange={(event)=>{
              console.log(event.target.value);
              console.log(this.state.monsters);
-             this.state.monsters.filter(x=)
+             const searchString = event.target.value.toLocaleLowerCase();
+            const filteredmonsters = this.state.monsters.filter((monster)=> {
+              return monster.name.toLocaleLowerCase().includes(searchString)
+            })
+            this.setState(()=>{
+              return {monsters: filteredmonsters}
+            })
           }} />
         {
           this.state.monsters.map((monster) => {
@@ -49,6 +55,7 @@ componentDidMount() {
         }
 
       </div>
+
     );
   }
 }
