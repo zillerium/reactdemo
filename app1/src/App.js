@@ -7,6 +7,7 @@ import About from './pages/About';
 import Home from './pages/Home';
 import {Route, Routes } from 'react-router-dom';
 import './styles.css'
+import React, {useState} from 'react';
 
 const getData = async () => {
 
@@ -18,13 +19,18 @@ let res = await client.post();
 	return (JSON.stringify(res.data));
 }
 
-
 const Button = () => {
    return (<button onClick={getData}>Get Data</button>)
 }
-
 const App = () => {
    console.log(window.location);
+   const [data, setData]= useState(null);
+   const [print, setPrint]= useState(null);
+const handleChange = (e) => {
+	setData(e.target.value);
+	setPrint(false);
+    console.log("changed data" + e.target.value);
+}
    	
  /*  let Component;
    switch (window.location.pathname) {
@@ -48,6 +54,15 @@ const App = () => {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
       </Routes>
+      <div>{print ?
+	   <h1>{data}</h1> : null
+      }</div>
+      <div>	   
+	   <input type="text" onChange={handleChange} />
+	   <button onClick={()=>setPrint(true)}>Print</button> 
+      </div>
+      <div>
+      </div>
       <header className="App-header">
 	  <p>This is a text</p>
 	  <Button />
