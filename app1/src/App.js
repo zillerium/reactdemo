@@ -3,9 +3,10 @@ import './App.css';
 import axios from "axios";
 import NavBar from "./NavBar";
 import Pricing from './pages/Pricing';
+import ProductPage from './pages/ProductPage';
 import About from './pages/About';
 import Home from './pages/Home';
-import {Route, Routes, useNavigate} from 'react-router-dom';
+import {Link, Route, Routes, useNavigate} from 'react-router-dom';
 import './styles.css'
 import React, {useState} from 'react';
 
@@ -51,7 +52,7 @@ const App = () => {
    	
  /*  let Component;
    switch (window.location.pathname) {
-     case "/":
+     <case "/":
        Component = Home;
        break;		   
      case "/pricing":
@@ -63,6 +64,7 @@ const App = () => {
 
    }
    */
+	   const productId = 2;
    return (
     <div className="App">
       <NavBar />
@@ -70,7 +72,11 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
+          <Route path="/product/:productId" element={<ProductPage productId ={productId} desc={'test1'}  />} />
       </Routes>
+	   <div>
+              <Link to={`/product/${productId}`}>Prod</Link>
+	   </div>
       <div>
           <form onSubmit={handleSubmit}>
               <label>Product ID</label>
