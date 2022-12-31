@@ -9,14 +9,15 @@ import {Route, Routes } from 'react-router-dom';
 import './styles.css'
 import React, {useState} from 'react';
 
-const getData = async () => {
-
-const client = axios.create({
+const getData = async (postJson) => {
+    const baseUrl = "https://peacioapi.com:3000/getDBData";
+    const client = axios.create({
 	baseURL: "https://peacioapi.com:3000/getDBData"
-})
-let res = await client.post();
-	console.log("res == "+JSON.stringify(res.data));
-	return (JSON.stringify(res.data));
+    })
+    //let res = await client.post();
+    let res = await axios.post(baseUrl, postJson);
+    console.log("res == "+JSON.stringify(res.data));
+    return (JSON.stringify(res.data));
 }
 
 const Button = () => {
@@ -24,13 +25,27 @@ const Button = () => {
 }
 const App = () => {
    console.log(window.location);
+   const [productID, setProductID]= useState(null);
+   const [price, setPrice]= useState(0);
    const [data, setData]= useState(null);
    const [print, setPrint]= useState(null);
-const handleChange = (e) => {
+
+   const handleSubmit = (e) => {
+      e.preventDefault();
+      const product = {
+          price: price,
+	  productID: productID
+      }
+      console.log(product);
+      getData(product);	   
+
+   }
+
+   const handleChange = (e) => {
 	setData(e.target.value);
 	setPrint(false);
-    console.log("changed data" + e.target.value);
-}
+        console.log("changed data" + e.target.value);
+   }
    	
  /*  let Component;
    switch (window.location.pathname) {
@@ -54,9 +69,37 @@ const handleChange = (e) => {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
       </Routes>
-      <div>{print ?
-	   <h1>{data}</h1> : null
-      }</div>
+      <div>
+          <form onSubmit={handleSubmit}>
+              <label>Product ID</label>
+	      <input 
+	         type="text"
+	         required
+	         value={productID}
+	         onChange={(e)=>setProductID(e.target.value)}
+	       />
+              <label>Price</label>
+	      <input 
+	         type="text"
+	         required
+	         value={price}
+	         onChange={(e)=>setPrice(e.target.value)}
+	       />
+
+               <button>Add</button>
+	       <p>{productID}</p>
+
+	       <p>{price}</p>
+	  </form>
+
+      </div>
+      <div>
+	   {
+	       print ?
+	       <h1>{data}</h1> 
+	       : null
+           }
+      </div>
       <div>	   
 	   <input type="text" onChange={handleChange} />
 	   <button onClick={()=>setPrint(true)}>Print</button> 
