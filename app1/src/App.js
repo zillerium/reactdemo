@@ -5,7 +5,7 @@ import NavBar from "./NavBar";
 import Pricing from './pages/Pricing';
 import About from './pages/About';
 import Home from './pages/Home';
-import {Route, Routes } from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import './styles.css'
 import React, {useState} from 'react';
 
@@ -25,19 +25,21 @@ const Button = () => {
 }
 const App = () => {
    console.log(window.location);
+   const navigate = useNavigate();
    const [productID, setProductID]= useState(null);
    const [price, setPrice]= useState(0);
    const [data, setData]= useState(null);
    const [print, setPrint]= useState(null);
 
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
       e.preventDefault();
       const product = {
           price: price,
 	  productID: productID
       }
       console.log(product);
-      getData(product);	   
+      await getData(product);
+      navigate('/about');
 
    }
 
