@@ -1,19 +1,17 @@
 import {useParams, useLocation, useNavigate} from "react-router-dom";
-//import React, {useState} from 'react';
+import React, {useState} from 'react';
 
 const ProductPage = (props) => {
 	const {productId}=useParams();
-	const myloc = useLocation().state;
+//	const prodId = useLocation().state.prodId;
 //	const [location, setLocation]=useState();
 //	console.log("state = "+JSON.stringify(location));
 //	console.log("use params = "+JSON.stringify(useParams));
 	console.log("productId = "+productId);
-	console.log("myloc = "+JSON.stringify(myloc));
-	console.log("props = "+JSON.stringify(props));
+//	console.log("prodId = "+prodId);
 	return (
 	  <div>
 	  <h1>Product {productId}</h1>
-	  <p>Product is {props.desc}</p>
 	  </div>
   )
 }

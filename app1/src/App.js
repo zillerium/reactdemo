@@ -8,7 +8,7 @@ import About from './pages/About';
 import Home from './pages/Home';
 import {Link, Route, Routes, useNavigate} from 'react-router-dom';
 import './styles.css'
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 
 const getData = async (postJson) => {
     const baseUrl = "https://peacioapi.com:3000/getDBData";
@@ -64,6 +64,53 @@ const App = () => {
 
    }
    */
+	const inProd = useRef(null);
+	const data1= {prodId1: 4};
+	const [prodId, setProdId] = useState();
+	const [productName, setProductName] = useState("");
+	const [nameList, setNameList] = useState("");
+	const [Display, setDisplay] = useState(false);
+        const setProdIdFn = () => {
+   	    setProdId(4);
+	}
+
+
+const completedProduct = (productName) => {
+	console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxcompleted prod = " + productName);
+    let arr = nameList.map((product)=> { 
+console.log("product. product " + product.product);
+console.log("productName " + productName);
+	    if (product.product == productName ) { 
+		    console.log("matched"); 
+		    return {product:productName, completed: true};
+	    }
+            else { 
+		    console.log("unmatched"); 
+		    return {product:product.product, completed:product.completed};
+	    }
+	 //   return (
+	 //           product.product ==productName ?
+////		    {product:productName, completed: true} :
+//		    {product:product.product, completed: false} 
+//	    ) 
+    })
+	setNameList(arr);
+	console.log("array == " +JSON.stringify(arr));
+	console.log("name list == " +JSON.stringify(nameList));
+}
+
+const deleteProduct = (productName) => {
+    setNameList(nameList.filter((product)=> { return product.product !=productName}))
+}
+
+const addList = () => {
+    setNameList([...nameList, {product: productName, completed: false}]);
+	console.log(nameList);
+	inProd.current.value = "";
+	setProductName("");
+}
+
+	const linkstr = "/product/4";
 	   const productId = 2;
    return (
     <div className="App">
@@ -72,10 +119,18 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
-          <Route path="/product/:productId" element={<ProductPage productId ={productId} desc={'test1'}  />} />
+          <Route path="/product/:productId" element={<ProductPage   />} />
       </Routes>
 	   <div>
-              <Link to={`/product/${productId}`}>Prod</Link>
+	   {prodId}
+	   </div>
+	   <div>
+           <button onClick={setProdIdFn}>Change</button>
+	   </div>
+	   <div>
+              <Link to={{
+		      pathname:linkstr, 
+		      state:data1}}>Prod</Link>
 	   </div>
       <div>
           <form onSubmit={handleSubmit}>
@@ -101,6 +156,35 @@ const App = () => {
 	  </form>
 
       </div>
+	   <div>
+               <button onClick={()=>{setDisplay(true)}}>Display</button>
+	   {Display && <div>Display {productId}</div>}
+	   </div>
+	   <div><h1>Add a product</h1></div>
+	   <div>
+               <input type="text"
+	   ref={inProd}
+	   onChange={(e)=>setProductName(e.target.value)} />
+	       <button onClick={addList}> Add a product</button>
+	   </div>
+	   <div>product name =
+	       {productName}
+	   </div>
+	   <div>
+	   <h1>tst list</h1>
+	   <ul>
+	   { nameList && nameList.map((val, key) => {
+                    return (
+			    <div>
+			    <li key={key}>{val.product}</li>
+                            <button onClick={() => completedProduct(val.product)}>Completed</button>
+                            <button onClick={() => deleteProduct(val.product)}>Del</button>
+			    <h2>{val.completed ? 'completed' : 'incomplete'}</h2>
+			    </div>
+		    )	    
+	       })}
+           </ul>
+	   </div>
       <div>
 	   {
 	       print ?
