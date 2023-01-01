@@ -164,6 +164,10 @@ const addList = () => {
 	   <div>
                <input type="text"
 	   ref={inProd}
+	   onKeyDown={(e)=>{if (e.keyCode==13) {
+		   console.log("yyyyyyyyyyyyyyy");
+		   setProductName(e.target.value); addList();
+	   }}}
 	   onChange={(e)=>setProductName(e.target.value)} />
 	       <button onClick={addList}> Add a product</button>
 	   </div>
