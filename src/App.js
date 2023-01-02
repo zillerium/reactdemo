@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
+import {MenuContext} from './helpers/Context';
 import NavBar from "./NavBar";
 import Pricing from './pages/Pricing';
 import ProductPage from './pages/ProductPage';
 import About from './pages/About';
 import Home from './pages/Home';
+import Menu from './components/Menu';
 import {Link, Route, Routes, useNavigate} from 'react-router-dom';
 import './styles.css'
 import React, {useState, useRef} from 'react';
@@ -31,6 +33,9 @@ const App = () => {
    const [price, setPrice]= useState(0);
    const [data, setData]= useState(null);
    const [print, setPrint]= useState(null);
+   const [menu, setMenu]=useState("menu");
+   const [userName, setUserName]=useState("");
+
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -74,8 +79,38 @@ const App = () => {
    	    setProdId(4);
 	}
 
+
+const completedProduct = (productName) => {
+	console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxcompleted prod = " + productName);
+    let arr = nameList.map((product)=> { 
+console.log("product. product " + product.product);
+console.log("productName " + productName);
+	    if (product.product == productName ) { 
+		    console.log("matched"); 
+		    return {product:productName, completed: true};
+	    }
+            else { 
+		    console.log("unmatched"); 
+		    return {product:product.product, completed:product.completed};
+	    }
+	 //   return (
+	 //           product.product ==productName ?
+////		    {product:productName, completed: true} :
+//		    {product:product.product, completed: false} 
+//	    ) 
+    })
+	setNameList(arr);
+	console.log("array == " +JSON.stringify(arr));
+	console.log("name list == " +JSON.stringify(nameList));
+}
+
+const deleteProduct = (productName) => {
+    setNameList(nameList.filter((product)=> { return product.product !=productName}))
+}
+
 const addList = () => {
-    setNameList([...nameList, productName]);
+    setNameList([...nameList, {product: productName, completed: false}]);
+	console.log(nameList);
 	inProd.current.value = "";
 	setProductName("");
 }
@@ -84,6 +119,7 @@ const addList = () => {
 	   const productId = 2;
    return (
     <div className="App">
+           <MenuContext.Provider value={{menu, setMenu, userName, setUserName}}>		   
       <NavBar />
       <Routes>
           <Route path="/" element={<Home />} />
@@ -91,6 +127,12 @@ const addList = () => {
           <Route path="/about" element={<About />} />
           <Route path="/product/:productId" element={<ProductPage   />} />
       </Routes>
+	   <div>
+	   <p>Menu -- </p>
+	   {menu === "menu" &&
+              <Menu />}
+	   </div>
+	   {userName}
 	   <div>
 	   {prodId}
 	   </div>
@@ -132,8 +174,12 @@ const addList = () => {
 	   </div>
 	   <div><h1>Add a product</h1></div>
 	   <div>
-               <input type="text" 
-           ref={inProd}
+               <input type="text"
+	   ref={inProd}
+	   onKeyDown={(e)=>{if (e.keyCode==13) {
+		   console.log("yyyyyyyyyyyyyyy");
+		   setProductName(e.target.value); addList();
+	   }}}
 	   onChange={(e)=>setProductName(e.target.value)} />
 	       <button onClick={addList}> Add a product</button>
 	   </div>
@@ -141,13 +187,17 @@ const addList = () => {
 	       {productName}
 	   </div>
 	   <div>
+	   <h1>tst list</h1>
 	   <ul>
-	   {nameList && nameList.map((val, key) => {
-                    return 
-		   (
-
-			   <li key={key}>{val}</li>
-	           )
+	   { nameList && nameList.map((val, key) => {
+                    return (
+			    <div>
+			    <li key={key}>{val.product}</li>
+                            <button onClick={() => completedProduct(val.product)}>Completed</button>
+                            <button onClick={() => deleteProduct(val.product)}>Del</button>
+			    <h2>{val.completed ? 'completed' : 'incomplete'}</h2>
+			    </div>
+		    )	    
 	       })}
            </ul>
 	   </div>
@@ -168,6 +218,7 @@ const addList = () => {
 	  <p>This is a text</p>
 	  <Button />
       </header>
+	   </MenuContext.Provider>
     </div>
   );
 }

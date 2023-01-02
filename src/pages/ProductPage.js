@@ -1,8 +1,14 @@
 import {useParams, useLocation, useNavigate} from "react-router-dom";
 import React, {useState} from 'react';
 
+import {useContext} from 'react'
+import {MenuContext} from '../helpers/Context'
+
+
+
 const ProductPage = (props) => {
 	const {productId}=useParams();
+        const {menu, setMenu, userName, setUserName} = useContext(MenuContext);
 //	const prodId = useLocation().state.prodId;
 //	const [location, setLocation]=useState();
 //	console.log("state = "+JSON.stringify(location));
@@ -11,7 +17,7 @@ const ProductPage = (props) => {
 //	console.log("prodId = "+prodId);
 	return (
 	  <div>
-	  <h1>Product {productId}</h1>
+	  <h1>Product {productId} {userName}</h1>
 	  </div>
   )
 }
