@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
+import {MenuContext} from './helpers/Context';
 import NavBar from "./NavBar";
 import Pricing from './pages/Pricing';
 import ProductPage from './pages/ProductPage';
 import About from './pages/About';
 import Home from './pages/Home';
+import Menu from './components/Menu';
 import {Link, Route, Routes, useNavigate} from 'react-router-dom';
 import './styles.css'
 import React, {useState, useRef} from 'react';
@@ -31,6 +33,9 @@ const App = () => {
    const [price, setPrice]= useState(0);
    const [data, setData]= useState(null);
    const [print, setPrint]= useState(null);
+   const [menu, setMenu]=useState("menu");
+   const [userName, setUserName]=useState("");
+
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -114,6 +119,7 @@ const addList = () => {
 	   const productId = 2;
    return (
     <div className="App">
+           <MenuContext.Provider value={{menu, setMenu, userName, setUserName}}>		   
       <NavBar />
       <Routes>
           <Route path="/" element={<Home />} />
@@ -121,6 +127,12 @@ const addList = () => {
           <Route path="/about" element={<About />} />
           <Route path="/product/:productId" element={<ProductPage   />} />
       </Routes>
+	   <div>
+	   <p>Menu -- </p>
+	   {menu === "menu" &&
+              <Menu />}
+	   </div>
+	   {userName}
 	   <div>
 	   {prodId}
 	   </div>
@@ -206,6 +218,7 @@ const addList = () => {
 	  <p>This is a text</p>
 	  <Button />
       </header>
+	   </MenuContext.Provider>
     </div>
   );
 }
