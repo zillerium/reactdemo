@@ -2,12 +2,14 @@ import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
 import {MenuContext} from './helpers/Context';
+import {CartOptions} from './components/CartOption';
 import NavBar from "./NavBar";
 import Pricing from './pages/Pricing';
 import ProductPage from './pages/ProductPage';
 import About from './pages/About';
 import Home from './pages/Home';
 import Menu from './components/Menu';
+import Cart from './components/Cart';
 import {Link, Route, Routes, useNavigate} from 'react-router-dom';
 import './styles.css'
 import React, {useState, useRef} from 'react';
@@ -129,10 +131,10 @@ const addList = () => {
       </Routes>
 	   <div>
 	   <p>Menu -- </p>
-	   {menu === "menu" &&
-              <Menu />}
+	   {menu === "menu" &&  <Menu />}
+	   {menu === "buy" &&  <Cart />}
 	   </div>
-	   {userName}
+	   {userName} <br/>{menu}
 	   <div>
 	   {prodId}
 	   </div>
