@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, {useState} from 'react';
+import Search1 from './Search1.js';
 import {useQuery, useMutation} from 'react-query';
 import axios from 'axios';
 
@@ -26,6 +27,7 @@ function App() {
 	const [merchantId, setMerchantId] = useState("");
 	const [merchantName, setMerchantName] = useState("");
 	const [deliveryCharge, setDeliveryCharge] = useState("");
+	const [search,setSearch] = useState("");
 	const {isLoading, error, data, isFetching, refetch} = useQuery('dogs',
 		() => axios ('https://random.dog/woof.json'),
 		{
@@ -56,6 +58,14 @@ const PostData = async  (part) => {
 
 }
 
+const searchDBx = async (searchVal) => {
+	console.log("searching ...");
+	console.log(searchVal);
+//	const baseUrl = "https://peacioapi.com:3000/searchDB/"+searchVal; 
+//	let res = await axios.get(baseUrl);
+//	console.log(res.data);
+}
+
 const {mutate,  isError} = useMutation(PostData, {
 	onSuccess: (successData) => {
 		console.log("post was done");
@@ -81,7 +91,11 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
       <header className="App-header">
         <p>
           Edit <code>src/App.js</code> and save to reload.
-        </p><div>
+        </p>
+          <div>
+	  <Search1 />
+	  </div>
+	  <div>
   <Button />
 	  <button onClick={refetch}>Get </button>
          </div>
