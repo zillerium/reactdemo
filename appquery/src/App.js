@@ -11,6 +11,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Cancel from './pages/Cancel'
 import Store from './pages/Store'
 import Success from './pages/Success'
+import CartProvider from './CartContext.js'
 
 function App() {
 
@@ -94,6 +95,7 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 
   return (
     <div className="App">
+	  <CartProvider>
          <Container>
 	    <NavbarComponent>
 
@@ -106,7 +108,7 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	        </Routes>
 	  </BrowserRouter>
 	  </Container>
-
+</CartProvider>
 
       <header className="App-header">
         <p>

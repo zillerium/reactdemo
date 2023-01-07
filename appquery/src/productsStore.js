@@ -18,7 +18,8 @@ const productsArray = [
 
 const getProductData = (id) => {
     let productData = productsArray.find(product=>product.id === id)
-
+console.log("proddata=================================");
+console.log(productData);
     return productData;
 
 }
