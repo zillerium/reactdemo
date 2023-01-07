@@ -4,7 +4,13 @@ import React, {useState} from 'react';
 import Search1 from './Search1.js';
 import {useQuery, useMutation} from 'react-query';
 import axios from 'axios';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavbarComponent from './components/NavbarComponent';
+import {Container} from 'react-bootstrap';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Cancel from './pages/Cancel'
+import Store from './pages/Store'
+import Success from './pages/Success'
 
 function App() {
 
@@ -88,6 +94,20 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 
   return (
     <div className="App">
+         <Container>
+	    <NavbarComponent>
+
+	    </NavbarComponent>
+	  <BrowserRouter>
+                <Routes>
+                     <Route index element={<Store />} />                    
+                     <Route path="succcess" element={<Success />} />                    
+                     <Route path="cancel" element={<Cancel />} />                    
+	        </Routes>
+	  </BrowserRouter>
+	  </Container>
+
+
       <header className="App-header">
         <p>
           Edit <code>src/App.js</code> and save to reload.
