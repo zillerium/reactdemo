@@ -9,11 +9,15 @@ import NavbarComponent from './components/NavbarComponent';
 import {Container} from 'react-bootstrap';
 import {Link, BrowserRouter ,  Routes, Route} from 'react-router-dom';
 import Cancel from './pages/Cancel'
+import NavBar from './NavBar.js'
+import Cart from './pages/Cart.js'
 import Store from './pages/Store'
+import About from './pages/About'
 import ProductPage from './pages/ProductPage'
 import AddProduct from './pages/AddProduct'
 import Success from './pages/Success'
 import CartProvider from './CartContext.js'
+import './styles.css'
 
 function App() {
 
@@ -99,6 +103,7 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
     <div >
 	  <CartProvider>
          <Container>
+		<NavBar />
 	    <NavbarComponent>
 
 	    </NavbarComponent>
@@ -108,6 +113,8 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
                      <Route path="cancel" element={<Cancel />} />     
                      <Route path="/product/:productId" element={<ProductPage />} />
                      <Route path="/addproduct/" element={<AddProduct />} />
+                     <Route path="/about/" element={<About />} />
+                     <Route path="/cart/" element={<Cart />} />
 	        </Routes>
           <div>
 	  </div>

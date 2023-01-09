@@ -32,6 +32,12 @@ const Search1 =  () => {
 	  <div>
 	    <input type="text" onChange={(e) => setSearch(e.target.value)}/>
             <button onClick={()=>searchDB(search)} >Search </button>
+
+                         <Link to={{
+				 pathname:`/addproduct`
+                                                           }}>Add Product</Link>
+
+
           </div>
                     <div>
 					<div>
