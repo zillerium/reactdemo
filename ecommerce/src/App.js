@@ -102,13 +102,12 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 
 	    </NavbarComponent>
                 <Routes>
-                     <Route index element={<Store />} />                    
+                     <Route index element={<Search1 />} />                    
                      <Route path="succcess" element={<Success />} />                    
                      <Route path="cancel" element={<Cancel />} />     
                      <Route path="/product/:productId" element={<ProductPage />} />
 	        </Routes>
           <div>
-	  <Search1 />
 	  </div>
 	  </Container>
 </CartProvider>
@@ -118,7 +117,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
           Edit <code>src/App.js</code> and save to reload.
         </p>
           <div>
-	  <Search1 />
 	  </div>
 	  <div>
   <Button />
