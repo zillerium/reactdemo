@@ -5,6 +5,7 @@ import {useQuery}  from 'react-query';
 import {Container, Button, Row, Col, Image, Table} from 'react-bootstrap';
 
 import {CartContext} from '../CartContext';
+import CartTotal from '../components/CartTotal';
 
 
 //      let res = await searchDB(props.query);
@@ -31,6 +32,8 @@ const [search, setSearch] = useState("");
                                                       <th>Brand</th>
                                                       <th>Details</th>
                                                       <th>Price</th>
+                                                      <th>Qty</th>
+                                                      <th>SubTot</th>
                                                       <th>Cart</th>
                                                  </tr>
                                             </thead>
@@ -45,6 +48,8 @@ const [search, setSearch] = useState("");
                                                            }}>{value.title}</Link>
                                                            </td>
                                  <td>    ${value.price?.toFixed(2)}  </td>
+                                 <td>    {value.quantity}  </td>
+                                 <td>   ${( value.price*value.quantity).toFixed(2)}  </td>
                                         <td> <Button sm="6" 
                                         onClick={()=>cart.addOneToCart({dbKey:value.id, partSalePrice:value.price, partShortDesc:value.title})
                                         }
@@ -56,6 +61,7 @@ const [search, setSearch] = useState("");
                                         </tr>
                                 )
                         })}
+                    		<CartTotal cart={cart}/>
                                        </tbody>
                                          </Table>
                                         </div>

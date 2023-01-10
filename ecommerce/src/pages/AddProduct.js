@@ -3,7 +3,7 @@ import {useQuery, useMutation} from 'react-query';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarComponent from '../components/NavbarComponent';
-import {Container} from 'react-bootstrap';
+import {Container, Button} from 'react-bootstrap';
 import {Link, BrowserRouter ,  Routes, Route} from 'react-router-dom';
 import Cancel from './Cancel'
 import Store from './Store'
@@ -12,6 +12,12 @@ import Success from './Success'
 import CartProvider from '../CartContext.js'
 
 const AddProduct = () => {
+
+	const [password, setPassword]=useState(false);
+
+
+
+
 
 	const [image, setImage]=useState(false);
 
@@ -41,9 +47,6 @@ const AddProduct = () => {
 		
 		);
 
-const Button = () => {
-return	  <button onClick={refetch}>Get </button>
-}
 
 const PostData = async  (part) => {
 	console.log("part");
@@ -63,13 +66,6 @@ const PostData = async  (part) => {
 
 }
 
-const searchDBx = async (searchVal) => {
-	console.log("searching ...");
-	console.log(searchVal);
-//	const baseUrl = "https://peacioapi.com:3000/searchDB/"+searchVal; 
-//	let res = await axios.get(baseUrl);
-//	console.log(res.data);
-}
 
 const {mutate,  isError} = useMutation(PostData, {
 	onSuccess: (successData) => {
@@ -95,9 +91,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
     <div >
 	  <CartProvider>
          <Container>
-	    <NavbarComponent>
-
-	    </NavbarComponent>
           <div>
 	  </div>
 	  </Container>
@@ -110,20 +103,15 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
           <div>
 	  </div>
 	  <div>
-  <Button />
-	  <button onClick={refetch}>Get </button>
          </div>
-	  Enter Part Data - partTechImgUrlmanPartNumber
 	  <div>
-            <label>Man Name</label>
 	    <input type="text" 
-	       placeholder="Man Name  " 
+	       placeholder="Brand Name  " 
 	       value={manName} 
 	       onChange={(e)=>setManName(e.target.value)} 
 	    />
 	  </div>
 	  <div>
-            <label>Part Number</label>
 	    <input type="text" 
 	       placeholder="Part Number  " 
 	       value={partNumber} 
@@ -131,15 +119,13 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Man Part Number</label>
 	    <input type="text" 
-	       placeholder="Man Part Number " 
+	       placeholder="Brand Part Number " 
 	       value={manPartNumber} 
 	       onChange={(e)=>setManPartNumber(e.target.value)} 
 	    />
 	  </div>
 	  <div>
-            <label>Man Part Option</label>
 	    <input type="text" 
 	       placeholder="Part Option " 
 	       value={partOption} 
@@ -147,7 +133,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Part Desc</label>
 	    <input type="text" 
 	       placeholder="Part Desc " 
 	       value={partDesc} 
@@ -155,7 +140,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Part Short Desc</label>
 	    <input type="text" 
 	       placeholder="Part Short Desc " 
 	       value={partShortDesc} 
@@ -163,7 +147,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Part Img Url</label>
 	    <input type="text" 
 	       placeholder="Part Img Url " 
 	       value={partImgUrl} 
@@ -171,7 +154,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Part Tech Img Url</label>
 	    <input type="text" 
 	       placeholder="Par Tech Img Url " 
 	       value={partTechImgUrl} 
@@ -179,7 +161,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Part Sale Price</label>
 	    <input type="text" 
 	       placeholder="Part SalePrice " 
 	       value={partSalePrice} 
@@ -187,15 +168,13 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Part Man Price</label>
 	    <input type="text" 
-	       placeholder="Part ManPrice " 
+	       placeholder="Part Brand Price " 
 	       value={partManPrice} 
 	       onChange={(e)=>setPartManPrice(e.target.value)} 
 	    />
 	  </div>
 	  <div>
-            <label>Currency</label>
 	    <input type="text" 
 	       placeholder="Currency " 
 	       value={currency} 
@@ -203,7 +182,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Merchant ID</label>
 	    <input type="text" 
 	       placeholder="Merchant Id " 
 	       value={merchantId} 
@@ -211,7 +189,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Merchant Name</label>
 	    <input type="text" 
 	       placeholder="Merchant Name " 
 	       value={merchantName} 
@@ -219,7 +196,6 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-            <label>Delivery Charge</label>
 	    <input type="text" 
 	       placeholder="Delivery Charge " 
 	       value={deliveryCharge} 
@@ -227,7 +203,7 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-           <button onClick={()=>mutate({
+           <Button onClick={()=>mutate({
 		   manName:manName, 
 		   partNumber: partNumber,
 		   manPartNumber: manPartNumber,
@@ -243,20 +219,8 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 		   merchantName: merchantName,
 		   deliveryCharge: deliveryCharge }
 
-	   )}>Add Part</button>
+	   )}>Add Part</Button>
 	  </div>
-	  <div>
-            <label>First Name </label>{firstName}
-	    <input type="text" placeholder="First " value={firstName} onChange={(e)=>setFirstName(e.target.value)} />
-	  </div>
-	  <div>
-            <label>Last Name </label>
-	    <input type="text" placeholder="Last " value={lastName} onChange={(e)=>setLastName(e.target.value)} />
-	  </div>
-	  <div>
-           <button onClick={()=>mutate({firstName:firstName, lastName, lastName})}>Post</button>
-	  </div>
-	  <ImageDisplay />
       </header>
     </div>
   );
