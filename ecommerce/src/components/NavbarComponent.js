@@ -37,7 +37,7 @@ return (
                 <Button onClick={handleShow}>Cart ({productsCount} items)</Button>
 	    </Navbar.Collapse>
         </Navbar>
-	<Modal show={show} onHide={handleClose} >
+	<Modal size="lg" show={show} onHide={handleClose} >
           <Modal.Header closeButton>
               <Modal.Title>Shopping Cart</Modal.Title>
 	  </Modal.Header>
@@ -70,8 +70,8 @@ return (
 
 
 
-		        :
-                            <h1>There are no items in your cart</h1>
+		        : <tbody>
+				</tbody>
 	                }
 	     <CartTotal cart={cart}/>
                                          </Table>

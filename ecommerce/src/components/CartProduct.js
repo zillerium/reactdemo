@@ -21,8 +21,8 @@ const CartProduct=(props)=> {
                                                   <td>{id}</td>
                                                   <td>{title}</td>
                                                   <td>{quantity}</td>
-                                                  <td>{priced}</td>
-                                                  <td>{subtot}</td>
+                                                  <td>${priced}</td>
+                                                  <td>${subtot}</td>
                       <td> <Button size="sm" onClick={() => cart.deleteFromCart(id)}>X</Button></td>
                                         </tr>
 

@@ -1,7 +1,9 @@
 import {Link, useMatch, useResolvedPath} from "react-router-dom"
+import peacio from './peacio.png';
+
 const NavBar=() => {
   return <nav className="nav">
-      <Link to="/" className="site-title">Peacio</Link>
+      <Link to="/" className="site-title"><img src={peacio} className="img-fluid" /></Link>
       <ul>
 		<CustomLink to="/cart" >Cart</CustomLink>
 		<CustomLink to="/addproduct" >Add Product</CustomLink>

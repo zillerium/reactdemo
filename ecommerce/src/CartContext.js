@@ -59,14 +59,16 @@ export const CartProvider = ({children}) => {
 	}
 
 const deleteFromCart=(id)=> {
- setCartProducts(
-     cartProducts =>
-	 cartProducts.filter(currentProduct=> {
-                        return currentProduct.id != id;
-	 })
+	console.log("cartProducts99999999999999999999999999999999999990000000000000000000000000000000000000000000000000000000000");
+	console.log(id);
+    const cartProducts1 = cartProducts.filter(currentProduct=> currentProduct.id != id)
 
 
-	 )
+	setCartProducts(cartProducts1);
+	console.log("cartProducts0000000000000000000000000000000000000000000000000000000000");
+	console.log(cartProducts1);
+	console.log(id);
+	console.log(cartProducts);
 
 }
 

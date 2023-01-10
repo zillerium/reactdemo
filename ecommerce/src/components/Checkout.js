@@ -4,7 +4,8 @@ import {useContext} from 'react';
 import axios from 'axios';
 const Checkout = (props) => {
  const cart = useContext(CartContext);
-      const checkout = async () => {
+      console.log(cart.items.length);
+	const checkout = async () => {
 
    const response = await axios.post("https://peacioapi.com:3000/checkout", cart.items);
                 console.log(response);
@@ -15,7 +16,7 @@ const Checkout = (props) => {
         }
 
 	return (
- <p><Button onClick={checkout} >Buy</Button></p>               
+ <div><Button disabled={(cart.items.length==0) ? true : false} onClick={checkout} >Buy</Button></div>               
         )
 
 }

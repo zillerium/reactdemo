@@ -13,7 +13,8 @@ import CartProvider from '../CartContext.js'
 
 const AddProduct = () => {
 
-	const [password, setPassword]=useState(false);
+	const [password, setPassword]=useState("");
+	const [correct, setCorrect]=useState(false);
 
 
 
@@ -46,7 +47,9 @@ const AddProduct = () => {
 		}
 		
 		);
-
+const checkPassword = () => {
+ if (password == "tiger12") setCorrect(true); else setCorrect(false);
+}
 
 const PostData = async  (part) => {
 	console.log("part");
@@ -101,6 +104,10 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
         <p>
         </p>
           <div>
+	  <input placeholder="password" onChange={(e) =>setPassword(e.target.value)} />
+	  <Button onClick={checkPassword} >Enable Page</Button>
+	  </div>
+	  <div>
 	  </div>
 	  <div>
          </div>
@@ -203,7 +210,7 @@ return ( data ? <img src={data.data.url}/> : <p></p>);
 	    />
 	  </div>
 	  <div>
-           <Button onClick={()=>mutate({
+           <Button disabled={!correct} onClick={()=>mutate({
 		   manName:manName, 
 		   partNumber: partNumber,
 		   manPartNumber: manPartNumber,
