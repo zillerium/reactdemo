@@ -3,6 +3,7 @@ import {useState, useContext } from 'react';
 import axios  from 'axios';
 import {CartContext} from '../CartContext';
 import CartProduct from './CartProduct';
+import CartTotal from './CartTotal';
 
 const NavbarComponent=()=>{
 
@@ -48,6 +49,7 @@ return (
                                                       <th>Details</th>
                                                       <th>Qty</th>
                                                       <th>Price</th>
+                                                      <th>Subtot</th>
                                                       <th>Action</th>
                                                  </tr>
                                             </thead>
@@ -55,14 +57,12 @@ return (
 
                                         <tbody>
 					      {cart.items.map((currentProduct, idx) => (
-                                        <tr>
-                                                  <td>{currentProduct.id}</td>
-                                                  <td>{currentProduct.title}</td>
-                                                  <td>{currentProduct.quantity}</td>
-                                                  <td>{currentProduct.price}</td>
-		      <td> <Button size="sm" onClick={() => 
-			      cart.deleteFromCart({currentProduct})}>Remove</Button></td>
-                                        </tr>
+						      <CartProduct key={idx}
+                                                      id = {currentProduct.id} 
+                                                      quantity = {currentProduct.quantity} 
+                                                      title = {currentProduct.title} 
+                                                      price = {currentProduct.price} 
+						      />
 						        ))}
 
 
@@ -73,10 +73,7 @@ return (
 		        :
                             <h1>There are no items in your cart</h1>
 	                }
-				<h1>Total: {cart.getTotalCost().toFixed(2)}</h1>
-				<Button variant="success" onClick={checkout}>
-                                    Buy
-				</Button>
+	     <CartTotal cart={cart}/>
                                          </Table>
 	           </Modal.Body> 
 
