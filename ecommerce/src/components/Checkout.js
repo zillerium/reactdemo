@@ -16,7 +16,7 @@ const Checkout = (props) => {
         }
 
 	return (
- <div><Button disabled={(cart.items.length==0) ? true : false} onClick={checkout} >Buy</Button></div>               
+ <p><Button disabled={(cart.items.length==0) ? true : false} onClick={checkout} >Buy</Button></p>               
         )
 
 }
