@@ -1,9 +1,10 @@
 import {useEffect, useState } from 'react'; 
 import {SignClient } from '@walletconnect/sign-client';
 import { Web3Modal } from "@web3modal/standalone";
-import {Card, Button, Form, Row, Col} from 'react-bootstrap';
+import {Container, Card, Button, Form, Row, Col} from 'react-bootstrap';
 import {CartContext} from '../CartContext';
 import {useContext} from 'react';
+
 
 function Wallet() {
 const	[signClient, setSignClient] = useState();
@@ -100,7 +101,8 @@ const tx =
     to: "0x846799Ed461091F982d52FB2f7812913c8E90B01",
     data: "0x",
     gasPrice: "0x029104e28c",
-    gasLimit: "0x5208",
+//    gasPrice:   "0x5152ab908c",
+    gasLimit:   "0x5208",
     value: "0x00",
   };
                 console.log(tx);
@@ -121,16 +123,47 @@ params: [tx]
 
 }
 
-  return (
-    <div className="App">
-	  <h1>Wallets</h1>
-	  <div>
-	  <p>Sign client = {cart.signClient && cart.signClient.opts.projectId}</p>
-<button onClick={createClient} disabled={cart.signClient}>Create Client</button>
-<button onClick={handleDisconnect} >Disconnect</button>
+const sessionLength = Object.keys(cart.sessions).length;
 
-<button onClick={handleConnect}  >Connect</button>
-<button onClick={handleSend}> Pay</button>
+console.log("dara----");
+console.log(cart)
+console.log(sessionLength)
+console.log(cart.sessions)
+console.log(cart.sessions)
+if (cart.sessions.length>0) console.log(cart.sessions.namespaces.eip155.accounts[0]);
+  return (
+    <div >
+	  <h1>Checkout</h1>
+	  <div>
+	  <Container className="mt-3">
+              <Row>
+                  <Col xs={3}> 
+                       <Card>
+	                 <Card.Header>Wallet & Payment</Card.Header>
+	                 <Card.Body>
+<Button onClick={createClient} disabled={cart.signClient}>Create Client</Button>
+	                 </Card.Body>
+                       </Card>
+                       <Card>
+	                 <Card.Body>
+                  <Button onClick={handleDisconnect}   disabled ={sessionLength==0} >Disconnect</Button>
+                  <Button onClick={handleConnect}  disabled ={!(sessionLength==0)} >Connect</Button> 
+	                 </Card.Body>
+                       </Card>
+                       <Card>
+	                 <Card.Body>
+                  <Button onClick={handleSend}> Pay</Button>
+	  <br/>$ {(cart.getTotalCost()).toFixed(2)}
+	                 </Card.Body>
+                       </Card>
+
+</Col>
+	      </Row>
+	  </Container>
+	  <h2>Connection</h2>
+	  <p>Sign client = {cart.signClient && cart.signClient.opts.projectId}</p>
+	  <p>Session = {(sessionLength) ? cart.sessions.namespaces.eip155.accounts[0]: ' '}</p>
+	  
 	  </div>
 	  <div>
 	 {txhash}

@@ -5,16 +5,19 @@ import {Card, Button, Form, Row, Col} from 'react-bootstrap';
 import {CartContext} from '../CartContext';
 import {useContext} from 'react';
 import Wallet from '../components/Wallet';
+import NavbarComponent from '../components/NavbarComponent';
 import axios from 'axios';
 
 function Pay() {
 
 const cart = useContext(CartContext);
-
-
+useEffect(()=>{
+	cart.closeModal();
+}, [cart])
+	console.log("**********************************************cart");
+	console.log(cart);
   return (
     <div className="App">
-	  <h1>Pay</h1>
 <Wallet />
     </div>
   );

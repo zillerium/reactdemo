@@ -14,10 +14,12 @@ export const CartContext = createContext({
 	createWeb3Modal: () => {},
 	handleConnect: () => {},
 	handleDisconnect: () => {},
+	closeModal: () => {},
 	web3Modal: {},
 	accounts: {},
 	sessions: {},
 	walletStatus: {},
+	show: {},
 })
 
 export const CartProvider = ({children}) => {
@@ -27,8 +29,9 @@ console.log("carttttttttttttttttttttttcart" );
 	console.log(children);
 	const [cartProducts, setCartProducts] = useState([]);
         const   [signClient, setSignClient] = useState(null);
+        const   [show, setShow] = useState({});
         const   [web3Modal, setWeb3Modal] = useState({});
-        const	[sessions, setSessions] = useState([]);
+        const	[sessions, setSessions] = useState({});
         const	[walletStatus, setWalletStatus] = useState(false);
         const	[accounts, setAccounts] = useState([]);
         const	[txhash, setTxhash] = useState([]);
@@ -36,6 +39,12 @@ console.log("carttttttttttttttttttttttcart" );
 //{id:1, quantity: 2
 //
 //
+
+const closeModal=() =>{
+	console.log("set show-------");
+	console.log(show);
+ setShow(false);
+}
 
 const handleDisconnect=async()=>{
   try {
@@ -239,10 +248,11 @@ const contextValue = {
 	  createWeb3Modal,
 	  handleConnect,
 	  handleDisconnect,
+	  closeModal,
    	  web3Modal: web3Modal,
    	  accounts: accounts,
 	  sessions: sessions,
-	  walletStatus: walletStatus,
+	  show: show,
 }
 		return (
                      <CartContext.Provider value={contextValue}>
