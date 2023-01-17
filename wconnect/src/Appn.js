@@ -7,7 +7,7 @@ import { parseEther} from 'ethers/lib/utils.js';
 import {WagmiConfig, goerli, mainnet, useAccount, useSendTransaction, usePrepareSendTransaction,
 	configureChains, createClient, useNetwork} from "wagmi";
 import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum"
-import Pay from './Pay'
+
 
 function App() {
 
@@ -29,8 +29,15 @@ function App() {
         const {chain} = useNetwork();
         const {isConnected, address} = useAccount()
 	// REACT_APP_PROJECT_ID=18cf63f918c9aebd18567aabc841a68a
+	const {config} = usePrepareSendTransaction({
+		request: { to: "0x846799Ed461091F982d52FB2f7812913c8E90B01", 
+		value: parseEther('1')},
+ 	   })
+	const {data, isLoading, isSuccess, sendTransaction } = useSendTransaction(config);
 	
 	async function connectWallet() {
+
+
 	}
   return (
     <div className="App">
@@ -38,6 +45,15 @@ function App() {
 	  <WagmiConfig client={wagmiClient}>
            <h1>Web3modal</h1>
 	   <button onClick={connectWallet} >Connect</button>
+	  <div>
+	    <div>
+               <button disabled={!sendTransaction} onClick={()=>sendTransaction?.()}>
+	            Send Transaction
+	       </button>
+	    </div>
+	  {isLoading && <div>check wallet</div>}
+	  {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+	  </div>
 	  <div>
              <Web3Modal projectId= "18cf63f918c9aebd18567aabc841a68a"
 	          theme="dark"
@@ -53,7 +69,6 @@ function App() {
 	   <div>
                {chain && <div>Network - {chain.name}</div>}
 	   </div>
-	  <Pay isConnected={isConnected}/>
 	  </WagmiConfig>
       </header>
     </div>
