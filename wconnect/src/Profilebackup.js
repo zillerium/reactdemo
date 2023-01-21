@@ -8,7 +8,7 @@ function Profile() {
  })
  const { disconnect } = useDisconnect()
 
-	if (isConnected)
+ if (isConnected)
  return (
  <div>
  Connected to {address}

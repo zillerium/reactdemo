@@ -15,32 +15,32 @@ function App() {
 
 	console.log("chain")
         console.log(goerli);
-//	const chains = [goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet];
+	const chains = [goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet];
 //	const chains = [polygonMumbai];
 	console.log(polygonMumbai);
 //	const {provider} = configureChains(chains, [
 //		walletConnectProvider({projectId: "18cf63f918c9aebd18567aabc841a68a"}), 
 //	]);
 	const { chains, provider, webSocketProvider } = configureChains(
-                 [polygonMumbai, goerli, avalanche],
+                 [polyMumbai],
                  [publicProvider()],
               )
 	console.log(provider);
 
-	const client=createClient({
-            autoConnect: true,
-		connectors: modalConnectors({appName: "web3Modal", chains}),
-		provider,
-	});
+//	const wagmiClient=createClient({
+ //           autoConnect: true,
+//		connectors: modalConnectors({appName: "web3Modal", chains}),
+//		provider,
+//	});
 
-//	const client = createClient({
- //             autoConnect: true,
- //             provider,
- //             webSocketProvider,
- //       })
+	const client = createClient({
+              autoConnect: true,
+              provider,
+              webSocketProvider,
+        })
 
 
-/*	const aEthereumClient = new EthereumClient(wagmiClient, chains);
+	const aEthereumClient = new EthereumClient(wagmiClient, chains);
         const {chain} = useNetwork();
 	const n1 = useNetwork();
 	console.log("*************************************** network 1");
@@ -53,30 +53,30 @@ function App() {
 	
 	async function connectWallet() {
 	}
-	*/
-	const aEthereumClient = new EthereumClient(client, chains);
-        const {isConnected, address} = useAccount()
-   const {chain} = useNetwork();
   return (
     <div className="App">
       <header className="App-header">
-	  <WagmiConfig client={client}>
-	            <div>
+	  <WagmiConfig client={wagmiClient}>
+           <h1>Web3modal</h1>
+	   <button onClick={connectWallet} >Connect</button>
+	  <div>
              <Web3Modal projectId= "18cf63f918c9aebd18567aabc841a68a"
-                  theme="dark"
-          accentColor="default"
-          ethereumClient={aEthereumClient}/>
-          </div>
-<div>
-             <Web3Button></Web3Button>
-          </div>
-    <div>
+	          theme="dark"
+	  accentColor="default"
+	  defaultChainId="polygonMumbai"
+	  ethereumClient={aEthereumClient}/>
+	  </div>
+	  <div>
+	     <Web3Button></Web3Button>
+	  </div>
+	   <div>
                 {isConnected ? <>Address: {address}</>:<>User not connected</>}
-           </div>
-           <div>
+	   </div>
+	   <div>
                {chain && <div>Network - {chain.name}</div>}
-           </div>
-
+	   </div>
+	  <Pay isConnected={isConnected}/>
+	  <Profile />
 	  </WagmiConfig>
       </header>
     </div>
