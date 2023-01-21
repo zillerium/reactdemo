@@ -3,19 +3,27 @@ import './App.css';
 import {Web3Modal, Web3Button} from '@web3modal/react';
 import {ethers,  utils, BigNumber} from 'ethers';
 import { parseEther} from 'ethers/lib/utils.js';
-
-import {WagmiConfig, goerli, mainnet, useAccount, useSendTransaction, usePrepareSendTransaction,
-	configureChains, createClient, useNetwork} from "wagmi";
+import {goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet } from "wagmi/chains";
+import {WagmiConfig,  useAccount, useSendTransaction, usePrepareSendTransaction,
+	configureChains, createClient, useNetwork, useConnect, chain} from "wagmi";
 import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum"
 import Pay from './Pay'
+import Profile from './Profile'
+
 
 function App() {
 
 	console.log("chain")
         console.log(goerli);
-	const chains = [goerli, mainnet];
+	const chains = [goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet];
+//	const chains = [polygonMumbai];
+	console.log(polygonMumbai);
 	const {provider} = configureChains(chains, [
-		walletConnectProvider({projectId: "18cf63f918c9aebd18567aabc841a68a"}), ]);
+		walletConnectProvider({projectId: "18cf63f918c9aebd18567aabc841a68a"}), 
+	]);
+//	const network1 = useNetwork();
+//	console.log("******************************************network1");
+//	console.log(network1);
 	console.log(provider);
 
 	const wagmiClient=createClient({
@@ -27,6 +35,12 @@ function App() {
 
 	const aEthereumClient = new EthereumClient(wagmiClient, chains);
         const {chain} = useNetwork();
+	const n1 = useNetwork();
+	console.log("*************************************** network 1");
+	console.log(n1);
+	console.log("provider ", provider);
+	//provider.getChainId().then(network=>{console.log(network)});
+	//provider.getChainId().then(network=>{console.log(network)});
         const {isConnected, address} = useAccount()
 	// REACT_APP_PROJECT_ID=18cf63f918c9aebd18567aabc841a68a
 	
@@ -42,6 +56,7 @@ function App() {
              <Web3Modal projectId= "18cf63f918c9aebd18567aabc841a68a"
 	          theme="dark"
 	  accentColor="default"
+	  defaultChainId="polygonMumbai"
 	  ethereumClient={aEthereumClient}/>
 	  </div>
 	  <div>
@@ -54,6 +69,7 @@ function App() {
                {chain && <div>Network - {chain.name}</div>}
 	   </div>
 	  <Pay isConnected={isConnected}/>
+	  <Profile />
 	  </WagmiConfig>
       </header>
     </div>

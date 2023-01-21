@@ -3,8 +3,7 @@ import './App.css';
 import {Web3Modal, Web3Button} from '@web3modal/react';
 import {ethers,  utils, BigNumber} from 'ethers';
 import { parseEther} from 'ethers/lib/utils.js';
-
-import {WagmiConfig, goerli, mainnet, useAccount, useSendTransaction, usePrepareSendTransaction,
+import {WagmiConfig,  useAccount, useSendTransaction, usePrepareSendTransaction,
 	configureChains, createClient, useNetwork} from "wagmi";
 import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum"
 
