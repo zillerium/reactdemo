@@ -1,0 +1,5 @@
+{ payNow &&
+           <DeployContract isConnected={isConnected} payee={payee} notary={payer} salesRelease={salesRelease} disputeRelease={disputeRelease} payer={payer}  />
+
+}
+

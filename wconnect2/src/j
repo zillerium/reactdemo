@@ -1,0 +1,4 @@
+curl --url https://mainnet.infura.io/v3/7fc0e20266514513b0b02d94a2343e54 \
+-X POST \
+-H "Content-Type: application/json" \
+-d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'
