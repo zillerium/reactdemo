@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {Web3Modal, Web3Button} from '@web3modal/react';
 import {ethers,  utils, BigNumber} from 'ethers';
+import {useContext} from 'react'
 import { parseEther} from 'ethers/lib/utils.js';
 import {goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet } from "wagmi/chains";
 import {WagmiConfig,  useAccount, useSendTransaction, usePrepareSendTransaction,
@@ -9,6 +10,7 @@ import {WagmiConfig,  useAccount, useSendTransaction, usePrepareSendTransaction,
 import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum"
 import Pay from './Pay'
 import Profile from './Profile'
+import {NetworkContext} from './context'
 import { publicProvider } from 'wagmi/providers/public';
 
 function App() {
@@ -57,6 +59,11 @@ function App() {
 	const aEthereumClient = new EthereumClient(client, chains);
         const {isConnected, address} = useAccount()
    const {chain} = useNetwork();
+   const network = useNetwork();
+	console.log("chain--")
+	console.log(chain)
+	console.log("network--")
+	console.log(network)
   return (
     <div className="App">
       <header className="App-header">
@@ -76,8 +83,9 @@ function App() {
            <div>
                {chain && <div>Network - {chain.name}</div>}
            </div>
-	  <Pay isConnected={isConnected} address={address}/>
-
+	  <NetworkContext.Provider value={network} >
+         	  <Pay isConnected={isConnected} address={address}/>
+           </NetworkContext.Provider>
 	  </WagmiConfig>
       </header>
     </div>

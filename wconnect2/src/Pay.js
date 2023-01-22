@@ -36,6 +36,13 @@ console.log("connected status - ", isConnected);
 	  { payNow && 
 	   <SendPay isConnected={isConnected} payee={payee} payAmount={payAmount} />
 	  }
+	  { payNow &&
+           <DeployContract isConnected={isConnected} payee={payee} notary={payer} salesRelease={salesRelease} disputeRelease={disputeRelease} p
+ayer={payer}  />
+
+}
+
+
 	 <h1> {payNow? "true":"false"}</h1>
 	  </div>
     </div>

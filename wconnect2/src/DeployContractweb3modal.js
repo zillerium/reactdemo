@@ -26,20 +26,35 @@ function DeployContract(props) {
 	const isConnected = props.isConnected;
 	// REACT_APP_PROJECT_ID=18cf63f918c9aebd18567aabc841a68a
 
-        const provider = new ethers.providers.JsonRpcProvider(network.chain.rpcUrls.default.http[0]);
-	const signer = provider.getSigner();
-
-	const contractFactory = new ethers.ContractFactory(abi, bytecode, signer);
-	const HandleDeploy= async ()=> {
-   	    const contract = await contractFactory(payee, notary, saleRelease, disputeRelease);
-
-	    console.log(contract.address)
+	const contractJson = {
+              "contractName": "peacio",
+	      "abi": abi,
+              "bytecode": bytecode
 	}
 
+
+	const prepareTransaction = usePrepareSendTransaction(network.chain.network, network.chain.id)
+    const sendTransaction =  useSendTransaction(network.chain.network, network.chain.id)
+    const HandleDeploy = async () => {
+        // encode the bytecode
+        const encodedBytecode = `0x${contractJson.bytecode}`
+
+        // prepare the transaction
+        const transaction = {
+            to: null,
+            data: encodedBytecode,
+            gas: '1000000'
+        }
+
+        // send the transaction
+        const receipt = await sendTransaction(transaction)
+        setContractAddress(receipt.contractAddress)
+    }
 
     return (
         <>
             <button onClick={HandleDeploy}>Deploy</button>
+            {contractAddress && <p>Contract deployed at: {contractAddress}</p>}
         </>
     )
 
