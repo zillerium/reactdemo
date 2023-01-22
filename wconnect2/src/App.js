@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {Web3Modal, Web3Button} from '@web3modal/react';
 import {ethers,  utils, BigNumber} from 'ethers';
-import {useContext} from 'react'
+import {useContext, useState} from 'react'
 import { parseEther} from 'ethers/lib/utils.js';
 import {goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet } from "wagmi/chains";
 import {WagmiConfig,  useAccount, useSendTransaction, usePrepareSendTransaction,
@@ -64,6 +64,7 @@ function App() {
 	console.log(chain)
 	console.log("network--")
 	console.log(network)
+	const [contractAddress, setContractAddress]=useState("0x0");
   return (
     <div className="App">
       <header className="App-header">
@@ -83,7 +84,7 @@ function App() {
            <div>
                {chain && <div>Network - {chain.name}</div>}
            </div>
-	  <NetworkContext.Provider value={network} >
+	  <NetworkContext.Provider value={network, contractAddress, setContractAddress} >
          	  <Pay isConnected={isConnected} address={address}/>
            </NetworkContext.Provider>
 	  </WagmiConfig>

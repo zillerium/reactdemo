@@ -14,11 +14,12 @@ import {NetworkContext} from './context'
 import {useContext} from 'react'
 
 function DeployContract(props) {
-	const network = useContext(NetworkContext);
+	const {network, contractAddress, setContractAddress} = useContext(NetworkContext);
 
 	console.log("jjjjjjjjjjjjjjjjjjjj");
 	console.log(network);
-	const [contractAddress, setContractAddress]=useState();
+//	const [contractAddress, setContractAddress]=useState();
+	const [purchaseAmount, setPurchaseAmount]=useState(0);
 	const payer = props.payer;
 	const payee = props.payee;
 	const notary = props.notary;
@@ -37,17 +38,31 @@ console.log("signer", signer);
 	const HandleDeploy= async ()=> {
 		console.log("c2ontractFactory")
 		console.log(contractFactory)
-   	    const contract = await contractFactory.deploy(payee, notary, saleRelease, disputeRelease);
+		console.log("purchaseAmount", purchaseAmount);
+//		const maticAmount = ethers.utils.parseUnits(purchaseAmount, 18);
+		const maticAmount = BigNumber.from(purchaseAmount);
+		console.log("matic amount ", maticAmount);
+   	    const contract = await contractFactory.deploy(payee, notary, saleRelease, disputeRelease, 
+		    {value: maticAmount});
 
 	    console.log("cccccontract")
 	    console.log(contract)
 	    console.log(contract.address)
+//		setContractAddress(contract.address);
+	   setContractAddress(contract.address);
 	}
 
 
     return (
         <>
-            <button onClick={HandleDeploy}>Deploy</button>
+	    <div>
+                <button onClick={HandleDeploy}>Deploy</button>
+	    </div>
+	    <div>
+                <input placeholder="purchase amount" type="text" onChange={(e)=>setPurchaseAmount(e.target.value)} />
+	      
+	    </div>
+   <h1> Purchased Amount  {purchaseAmount}</h1>
         </>
     )
 

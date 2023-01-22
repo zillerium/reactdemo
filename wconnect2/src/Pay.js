@@ -9,6 +9,7 @@ import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal
 import {useState} from 'react';
 import SendPay from './SendPay';
 import DeployContract from './DeployContract';
+import ContractFunctions from './ContractFunctions';
 
 function Pay(props) {
  const [payNow, setPayNow]=useState(false);
@@ -39,6 +40,9 @@ console.log("connected status - ", isConnected);
 	  { payNow &&
            <DeployContract isConnected={isConnected} payee={payee} notary={payer} salesRelease={salesRelease} disputeRelease={disputeRelease} p
 ayer={payer}  />
+	  }
+	  { payNow &&
+           <ContractFunctions isConnected={isConnected} payee={payee} notary={payer} salesRelease={salesRelease} disputeRelease={disputeRelease} payer={payer}  />
 
 }
 
