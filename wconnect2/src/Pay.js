@@ -6,12 +6,14 @@ import { parseEther} from 'ethers/lib/utils.js';
 import {WagmiConfig,  useAccount, useSendTransaction, usePrepareSendTransaction,
 	configureChains, createClient, useNetwork} from "wagmi";
 import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum"
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import SendPay from './SendPay';
 import DeployContract from './DeployContract';
 import ContractFunctions from './ContractFunctions';
+import {NetworkContext} from './context'
 
 function Pay(props) {
+	        const {network, contractAddress, setContractAddress} = useContext(NetworkContext);
  const [payNow, setPayNow]=useState(false);
  const [payee, setPayee]=useState();
  const [payAmount, setPayAmount]=useState(0);
@@ -34,14 +36,14 @@ console.log("connected status - ", isConnected);
 	  <div>
 	  <button onClick={(e)=>setPayNow(true)} >Pay Now</button>
 	  </div>
-	  { payNow && 
+	  {payNow && 
 	   <SendPay isConnected={isConnected} payee={payee} payAmount={payAmount} />
 	  }
 	  { payNow &&
            <DeployContract isConnected={isConnected} payee={payee} notary={payer} salesRelease={salesRelease} disputeRelease={disputeRelease} p
 ayer={payer}  />
 	  }
-	  { payNow &&
+	  { contractAddress &&
            <ContractFunctions isConnected={isConnected} payee={payee} notary={payer} salesRelease={salesRelease} disputeRelease={disputeRelease} payer={payer}  />
 
 }

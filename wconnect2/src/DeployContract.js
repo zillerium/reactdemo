@@ -15,7 +15,8 @@ import {useContext} from 'react'
 
 function DeployContract(props) {
 	const {network, contractAddress, setContractAddress} = useContext(NetworkContext);
-
+// setContractAddress("0xF");
+	console.log(contractAddress);
 	console.log("jjjjjjjjjjjjjjjjjjjj");
 	console.log(network);
 //	const [contractAddress, setContractAddress]=useState();
@@ -26,7 +27,7 @@ function DeployContract(props) {
 	const saleRelease = props.salesRelease;
 	const disputeRelease = props.disputeRelease;
 	const isConnected = props.isConnected;
-	console.log(bytecode1)
+//	console.log(bytecode1)
 	// REACT_APP_PROJECT_ID=18cf63f918c9aebd18567aabc841a68a
 
         //const provider = new ethers.providers.JsonRpcProvider(network.chain.rpcUrls.default.http[0]);

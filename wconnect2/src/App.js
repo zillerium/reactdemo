@@ -64,7 +64,8 @@ function App() {
 	console.log(chain)
 	console.log("network--")
 	console.log(network)
-	const [contractAddress, setContractAddress]=useState("0x0");
+	const [contractAddress, setContractAddress]=useState(null);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -84,7 +85,7 @@ function App() {
            <div>
                {chain && <div>Network - {chain.name}</div>}
            </div>
-	  <NetworkContext.Provider value={network, contractAddress, setContractAddress} >
+	  <NetworkContext.Provider value={{network, contractAddress, setContractAddress}} >
          	  <Pay isConnected={isConnected} address={address}/>
            </NetworkContext.Provider>
 	  </WagmiConfig>
