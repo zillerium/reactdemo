@@ -7,7 +7,7 @@ import {WagmiConfig,  useAccount, useSendTransaction, usePrepareSendTransaction,
 	configureChains, createClient, useNetwork} from "wagmi";
 import {EthereumClient, modalConnectors, walletConnectProvider, WalletConnectConnector} from "@web3modal/ethereum"
 import {useState} from 'react';
-import bytecode from './bytecode';
+import bytecode from './bytecode.txt';
 import abi from './abi';
 import Web3 from 'web3'
 import {NetworkContext} from './context'
