@@ -44,13 +44,14 @@ const [balance, setBalance] = useState(0);
 
     return (
         <>
+	    <h1>Perform Contract Functions</h1>
 	    <div>
                 <button onClick={getBalance}>get contract balance</button>
 	    </div>
 	    <div>
 	      
 	    </div>
-   <h1> contract balance =  {balance} at address {contractAddress}</h1>
+   <p> contract balance =  {balance} at address {contractAddress}</p>
         </>
     )
 

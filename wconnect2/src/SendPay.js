@@ -25,6 +25,9 @@ function SendPay(props) {
 console.log("connected status - ", isConnected);	
   return (
     <div >
+	  <div>
+               <h1>Send Payment</h1>
+	  </div>
 	    <div>
                <button disabled={!isConnected} onClick={()=>sendTransaction?.()}>
 	            Send Transaction

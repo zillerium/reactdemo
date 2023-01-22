@@ -21,6 +21,7 @@ function DeployContract(props) {
 	console.log(network);
 //	const [contractAddress, setContractAddress]=useState();
 	const [purchaseAmount, setPurchaseAmount]=useState(0);
+	const [existingContractAddress, setExistingContractAddress]=useState(0);
 	const payer = props.payer;
 	const payee = props.payee;
 	const notary = props.notary;
@@ -56,6 +57,7 @@ console.log("signer", signer);
 
     return (
         <>
+	    <h1>Deploy New Contract</h1>
 	    <div>
                 <button onClick={HandleDeploy}>Deploy</button>
 	    </div>
@@ -63,7 +65,14 @@ console.log("signer", signer);
                 <input placeholder="purchase amount" type="text" onChange={(e)=>setPurchaseAmount(e.target.value)} />
 	      
 	    </div>
-   <h1> Purchased Amount  {purchaseAmount}</h1>
+   <p> Purchased Amount  {purchaseAmount}</p>
+	    <h1>Existing Contract</h1>
+	    <div>
+                <button onClick={()=>setContractAddress(existingContractAddress)}>Save Contract Address</button>
+	    </div>
+	    <div>
+                <input placeholder="contract address" type="text" onChange={(e)=>setExistingContractAddress(e.target.value)} />
+	    </div>
         </>
     )
 
