@@ -3,8 +3,7 @@ import './App.css';
 import {Web3Modal, Web3Button} from '@web3modal/react';
 import {ethers,  ContractFactory, utils, BigNumber} from 'ethers';
 import { parseEther} from 'ethers/lib/utils.js';
-import {WagmiConfig,  useAccount, useSigner, useSendTransaction, usePrepareSendTransaction,
-	configureChains, createClient, useNetwork, useContract, useProvider, useContractRead, useContractWrite} from "wagmi";
+import {WagmiConfig,   useContractRead, useContractWrite, usePrepareContractWrite} from "wagmi";
 import {EthereumClient, modalConnectors, walletConnectProvider, WalletConnectConnector} from "@web3modal/ethereum"
 import {useState} from 'react';
 import bytecode1 from './bytecode';
@@ -15,17 +14,17 @@ import {useContext} from 'react'
 
 function BuyerSettle() {
 	const {network, contractAddress, setContractAddress} = useContext(NetworkContext);
+console.log("contract address", contractAddress);
 
-		const {data, isError, isLoading, sendTransaction} = useContractWrite({
-			address: contractAddress,
-			abi: abi,
-	                functionName: 'settlement',
-		})
-	if (isError) {
-             return <div>Error in contract {data}</div>
-	}
+  const {config, error} = usePrepareContractWrite({
+                   address: contractAddress,
+	  abi: abi,
+	  functionName: 'settlement',
+  })
+
+		const {data, isLoading, isSuccess, write} = useContractWrite(config)
 	if (isLoading) {
-            return <div>Loading ...</div>
+             return <div>Loadiong ...</div>
 	}
 	console.log(data)
 
@@ -33,8 +32,9 @@ function BuyerSettle() {
 
     return (
         <>
-	      
-   <p>settlement =   at address {contractAddress}</p>
+	<div><button disabled={!write} onClick={()=>write?.()}>Settle</button></div>
+	    {error && (<div> error in formatting {error.message} </div>)}
+   <div><p>settlement =   at address {contractAddress}</p></div>
         </>
     )
 

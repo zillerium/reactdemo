@@ -38,8 +38,9 @@ const [settleContract, setSettleContract] = useState(false);
 	    <h1>Perform Contract Functions</h1>
 	    <div>
                 <button onClick={()=>setShowBalance(true)}>get contract balance</button>
-                <button onClick={()=>setSettleContract(true)}>settle Contract</button>
-                <button onClick={()=>setSettleContract(false)}>reset settle Contract</button>
+                <button onClick={()=>setShowBalance(false)}>reset get contract balance</button>
+                <button onClick={()=>setSettleContract(true)}>show settle Contract</button>
+                <button onClick={()=>setSettleContract(false)}>reset show settle Contract</button>
 	    </div>
 	    <div>
 	    {showBalance && <GetBalance />} 
