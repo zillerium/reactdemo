@@ -12,13 +12,10 @@ import abi from './abi';
 import Web3 from 'web3'
 import {NetworkContext} from './context'
 import {useContext} from 'react'
-import GetBalance from './GetBalance'
-import BuyerSettle from './BuyerSettle'
 
-function ContractFunctions(props) {
+function GetBalance(props) {
 	const {network, contractAddress, setContractAddress} = useContext(NetworkContext);
-const [showBalance, setShowBalance] = useState(false);
-const [settleContract, setSettleContract] = useState(false);
+const [balance, setBalance] = useState(0);
 	console.log("jjjjjjjjjjjjjjjjjjjj");
 	console.log(contractAddress);
 	const payer = props.payer;
@@ -31,22 +28,24 @@ const [settleContract, setSettleContract] = useState(false);
 	//console.log(contract)
 	// REACT_APP_PROJECT_ID=18cf63f918c9aebd18567aabc841a68a
         //const provider = new ethers.providers.JsonRpcProvider(network.chain.rpcUrls.default.http[0]);
+//		setBalance(balance);
+
+		const {data, isError, isLoading} = useContractRead({
+			address: contractAddress,
+			abi: abi,
+	                functionName: 'getContractBalance'})
+	console.log(data)
+let contractBalance = 0;
+        if (data) {
+                 contractBalance = Number(data._hex);
+		} 
+
 
 
     return (
         <>
-	    <h1>Perform Contract Functions</h1>
-	    <div>
-                <button onClick={()=>setShowBalance(true)}>get contract balance</button>
-                <button onClick={()=>setSettleContract(true)}>settle Contract</button>
-                <button onClick={()=>setSettleContract(false)}>reset settle Contract</button>
-	    </div>
-	    <div>
-	    {showBalance && <GetBalance />} 
-	    </div>
-	    <div>
-	    {settleContract && <BuyerSettle />} 
-	    </div>
+	      
+   <p> contract balance =  {contractBalance} at address {contractAddress}</p>
         </>
     )
 
@@ -56,4 +55,4 @@ const [settleContract, setSettleContract] = useState(false);
 
 }
 
-export default ContractFunctions;
+export default GetBalance;
