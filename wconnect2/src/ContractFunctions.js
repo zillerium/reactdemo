@@ -15,12 +15,14 @@ import {useContext} from 'react'
 import GetBalance from './GetBalance'
 import BuyerSettle from './BuyerSettle'
 import ApproveContract from './ApproveContract'
+import PayContract from './PayContract'
 
 function ContractFunctions(props) {
 	const {network, contractAddress, setContractAddress} = useContext(NetworkContext);
 const [showBalance, setShowBalance] = useState(false);
 const [settleContract, setSettleContract] = useState(false);
 const [approveContract, setApproveContract] = useState(false);
+const [payContract, setPayContract] = useState(false);
 	console.log("jjjjjjjjjjjjjjjjjjjj");
 	console.log(contractAddress);
 	const payer = props.payer;
@@ -45,6 +47,8 @@ const [approveContract, setApproveContract] = useState(false);
                 <button onClick={()=>setSettleContract(false)}>reset show ether settle Contract</button>
                 <button onClick={()=>setApproveContract(true)}>show approve erc20 amount Contract</button>
                 <button onClick={()=>setApproveContract(false)}>reset approve erc20 amount Contract</button>
+                <button onClick={()=>setPayContract(true)}>show pay erc20 amount Contract</button>
+                <button onClick={()=>setPayContract(false)}>reset pay erc20 amount Contract</button>
 	    </div>
 	    <div>
 	    {showBalance && <GetBalance />} 
@@ -54,6 +58,9 @@ const [approveContract, setApproveContract] = useState(false);
 	    </div>
 	    <div>
 	    {approveContract && <ApproveContract />} 
+	    </div>
+	    <div>
+	    {payContract && <PayContract />} 
 	    </div>
         </>
     )
