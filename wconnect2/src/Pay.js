@@ -13,10 +13,10 @@ import ContractFunctions from './ContractFunctions';
 import {NetworkContext} from './context'
 
 function Pay(props) {
-	        const {network, contractAddress, setContractAddress} = useContext(NetworkContext);
+	        const {network, paymentAmount, setPaymentAmount, erc20ContractAddress, setERC20ContractAddress, contractAddress, setContractAddress} = useContext(NetworkContext);
  const [payNow, setPayNow]=useState(false);
  const [payee, setPayee]=useState();
- const [payAmount, setPayAmount]=useState(0);
+ //const [payAmount, setPayAmount]=useState(0);
 	const isConnected = props.isConnected;
 	const payer = props.address;
 	console.log("chain")
@@ -31,13 +31,16 @@ console.log("connected status - ", isConnected);
                   <input type="text" onChange={(e)=>setPayee(e.target.value)} placeholder="payee address"/>
 	    </div>
 	    <div>
-                  <input type="text" onChange={(e)=>setPayAmount(e.target.value)} placeholder="amount to pay"/>
+                  <input type="text" onChange={(e)=>setPaymentAmount(e.target.value)} placeholder="amount to pay"/>
+	    </div>
+	    <div>
+                  <input type="text" onChange={(e)=>setERC20ContractAddress(e.target.value)} placeholder="erc20 address usdc"/>
 	    </div>
 	  <div>
 	  <button onClick={(e)=>setPayNow(true)} >Pay Now</button>
 	  </div>
 	  {payNow && 
-	   <SendPay isConnected={isConnected} payee={payee} payAmount={payAmount} />
+	   <SendPay isConnected={isConnected} payee={payee} payAmount={paymentAmount} />
 	  }
 	  { payNow &&
            <DeployContract isConnected={isConnected} payee={payee} notary={payer} salesRelease={salesRelease} disputeRelease={disputeRelease} p

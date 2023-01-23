@@ -14,11 +14,13 @@ import {NetworkContext} from './context'
 import {useContext} from 'react'
 import GetBalance from './GetBalance'
 import BuyerSettle from './BuyerSettle'
+import ApproveContract from './ApproveContract'
 
 function ContractFunctions(props) {
 	const {network, contractAddress, setContractAddress} = useContext(NetworkContext);
 const [showBalance, setShowBalance] = useState(false);
 const [settleContract, setSettleContract] = useState(false);
+const [approveContract, setApproveContract] = useState(false);
 	console.log("jjjjjjjjjjjjjjjjjjjj");
 	console.log(contractAddress);
 	const payer = props.payer;
@@ -37,16 +39,21 @@ const [settleContract, setSettleContract] = useState(false);
         <>
 	    <h1>Perform Contract Functions</h1>
 	    <div>
-                <button onClick={()=>setShowBalance(true)}>get contract balance</button>
-                <button onClick={()=>setShowBalance(false)}>reset get contract balance</button>
-                <button onClick={()=>setSettleContract(true)}>show settle Contract</button>
-                <button onClick={()=>setSettleContract(false)}>reset show settle Contract</button>
+                <button onClick={()=>setShowBalance(true)}>get ether contract balance</button>
+                <button onClick={()=>setShowBalance(false)}>reset get ether contract balance</button>
+                <button onClick={()=>setSettleContract(true)}>show settle ether Contract</button>
+                <button onClick={()=>setSettleContract(false)}>reset show ether settle Contract</button>
+                <button onClick={()=>setApproveContract(true)}>show approve erc20 amount Contract</button>
+                <button onClick={()=>setApproveContract(false)}>reset approve erc20 amount Contract</button>
 	    </div>
 	    <div>
 	    {showBalance && <GetBalance />} 
 	    </div>
 	    <div>
 	    {settleContract && <BuyerSettle />} 
+	    </div>
+	    <div>
+	    {approveContract && <ApproveContract />} 
 	    </div>
         </>
     )
