@@ -59,26 +59,31 @@ const buttonLabels = ['Connect Wallet', 'Deploy Contract', 'Approve Stablecoin C
     // Code for paying seller
     setMessage('Complete');
   };
+const buttonLabelPairs = [['Connect Wallet', 'Deploy Contract'], ['Approve Stablecoin Contract', 'Pay Contract'], ['Approve Escrow Contract', 'Pay Seller']];
 
-  return (
-    <div className="container">
-      {buttonLabels.map((label, index) => (
-        <ButtonRow
-          key={label}
-          label={label}
-          buttonNumber={index + 1}
-          currentButton={currentButton}
-          handleConnectWallet={handleConnectWallet}
-          handleDeployContract={handleDeployContract}
-          handleApproveStableCoinContract={handleApproveStableCoinContract}
-          handlePayContract={handlePayContract}
-          handleApproveEscrowContract={handleApproveEscrowContract}
-          handlePaySeller={handlePaySeller}
-        />
-      ))}
-      <p>{message}</p>
-    </div>
-  );
+return (
+  <div className="container">
+    {buttonLabelPairs.map((pair, index) => (
+      <div className="row">
+        {pair.map((label, buttonNumber) => (
+		<div className="col-md-4 col-sm-6 text-center">
+  <Button
+    disabled={currentButton !== buttonNumber}
+    variant={currentButton !== buttonNumber ? "secondary" : "primary"}
+    active
+    onClick={buttonNumber === 1 ? handleConnectWallet : buttonNumber === 2 ? handleDeployContract : buttonNumber === 3 ? handleApproveStableCoinContract : buttonNumber === 4 ? handlePayContract : buttonNumber === 5 ? handleApproveEscrowContract : handlePaySeller }
+  >
+    {label}
+  </Button>
+</div>
+        ))}
+      </div>
+    ))}
+    <p>{message}</p>
+  </div>
+);
+
+
 }
 
 function ButtonRow({ label, buttonNumber, currentButton, handleConnectWallet, handleDeployContract, handleApproveStableCoinContract, handlePayContract, handleApproveEscrowContract, handlePaySeller }) {
