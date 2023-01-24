@@ -11,6 +11,12 @@ import PayContract from './PayContract';
 import ApproveEscrowContract from './ApproveEscrowContract';
 import PaySeller from './PaySeller';
 
+import {Web3Modal, Web3Button} from '@web3modal/react';
+import {goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet } from "wagmi/chains";
+import {WagmiConfig,  useAccount,configureChains, createClient, useNetwork, useConnect, chain} from "wagmi";
+import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum"
+import { publicProvider } from 'wagmi/providers/public';
+
 
 function Wallet() {
         const   [connectWallet, setConnectWallet] = useState(true);
@@ -27,7 +33,22 @@ function Wallet() {
         const   [isConnected, setIsConnected] = useState();
 
 
-const cart = useContext(CartContext);
+        const cart = useContext(CartContext);
+
+	const { chains, provider, webSocketProvider } = configureChains(
+                 [polygonMumbai, goerli, avalanche],
+                 [publicProvider()],
+              )
+        const client=createClient({
+            autoConnect: true,
+                connectors: modalConnectors({appName: "web3Modal", chains}),
+                provider,
+        });
+
+        const aEthereumClient = new EthereumClient(client, chains);
+        const {isConnected: isConnectedAccount, address: addressAccount} = useAccount()
+        const {chain} = useNetwork();
+        const network = useNetwork();
 
 
 return (
@@ -47,9 +68,26 @@ return (
 	}}>
 
       <div className="row">
+
+       <WagmiConfig client={client}>
+          <div>
+             <Web3Modal projectId= "18cf63f918c9aebd18567aabc841a68a"
+                  theme="dark"
+                  accentColor="default"
+                  ethereumClient={aEthereumClient}/>
+          </div>
+          <div>
+             <Web3Button></Web3Button>
+          </div>
+           <div>
+                {isConnectedAccount ? <>Address: {addressAccount}</>:<>User not connected</>}
+           </div>
+           <div>
+               {chain && <div>Network - {chain.name}</div>}
+           </div>
+
+
   	  <div className="col-md-4 col-sm-6 text-center">
-	{ connectWallet && <ConnectWallet />	}
-	{ !connectWallet && <Button variant="secondary" disabled>Connect Wallet</Button>	}
 	{ deployContract && <DeployContract />	}
 	{ !deployContract && <Button variant="secondary" disabled>Deploy Contract</Button>	}
 	{ approveContract && <ApproveContract />	}
@@ -61,6 +99,9 @@ return (
 	{ paySeller && <PaySeller />	}
 	{ !paySeller & <Button variant="secondary" disabled>Pay Seller</Button>	}
 	</div>
+          </WagmiConfig>
+
+
       </div>      	
         </ContractContext.Provider>
   </div>
