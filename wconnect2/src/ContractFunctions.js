@@ -15,14 +15,18 @@ import {useContext} from 'react'
 import GetBalance from './GetBalance'
 import BuyerSettle from './BuyerSettle'
 import ApproveContract from './ApproveContract'
+import ApproveContractTransfer from './ApproveContractTransfer'
 import PayContract from './PayContract'
+import PaySeller from './PaySeller'
 
 function ContractFunctions(props) {
 	const {network, contractAddress, setContractAddress} = useContext(NetworkContext);
 const [showBalance, setShowBalance] = useState(false);
 const [settleContract, setSettleContract] = useState(false);
 const [approveContract, setApproveContract] = useState(false);
+const [approveContractPay, setApproveContractPay] = useState(false);
 const [payContract, setPayContract] = useState(false);
+const [paySeller, setPaySeller] = useState(false);
 	console.log("jjjjjjjjjjjjjjjjjjjj");
 	console.log(contractAddress);
 	const payer = props.payer;
@@ -49,6 +53,10 @@ const [payContract, setPayContract] = useState(false);
                 <button onClick={()=>setApproveContract(false)}>reset approve erc20 amount Contract</button>
                 <button onClick={()=>setPayContract(true)}>show pay erc20 amount Contract</button>
                 <button onClick={()=>setPayContract(false)}>reset pay erc20 amount Contract</button>
+                <button onClick={()=>setPaySeller(true)}>show pay seller  erc20 amount </button>
+                <button onClick={()=>setPaySeller(false)}>reset pay sellr erc20 amount </button>
+                <button onClick={()=>setApproveContractPay(true)}>show approve pay from erc20 contract </button>
+                <button onClick={()=>setApproveContractPay(false)}>reset approve pay from contract erc20 </button>
 	    </div>
 	    <div>
 	    {showBalance && <GetBalance />} 
@@ -61,6 +69,12 @@ const [payContract, setPayContract] = useState(false);
 	    </div>
 	    <div>
 	    {payContract && <PayContract />} 
+	    </div>
+	    <div>
+	    {paySeller && <PaySeller />} 
+	    </div>
+	    <div>
+	    {approveContractPay && <ApproveContractTransfer />} 
 	    </div>
         </>
     )

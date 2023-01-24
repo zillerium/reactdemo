@@ -13,11 +13,6 @@ const abi=[
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
-			},
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
 			}
 		],
 		"stateMutability": "nonpayable",
