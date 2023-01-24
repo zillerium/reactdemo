@@ -1,106 +1,72 @@
-import {useEffect, useState } from 'react'; 
+import {useEffect, useState, useContext } from 'react'; 
 import {SignClient } from '@walletconnect/sign-client';
-import { Web3Modal } from "@web3modal/standalone";
 import {Container, Card, Button, Form, Row, Col} from 'react-bootstrap';
 import {CartContext} from '../CartContext';
-import {useContext} from 'react';
+import {ContractContext} from './ContractContext';
 import ReactPlayer from 'react-player';
+import ConnectWallet from './ConnectWallet';
+import DeployContract from './DeployContract';
+import ApproveContract from './ApproveContract';
+import PayContract from './PayContract';
+import ApproveEscrowContract from './ApproveEscrowContract';
+import PaySeller from './PaySeller';
 
 
 function Wallet() {
-const	[signClient, setSignClient] = useState();
-const	[web3Modal, setWeb3Modal] = useState();
-const	[test, setTest1] = useState();
-const	[sessions, setSessions] = useState([]);
-const	[accounts, setAccounts] = useState([]);
-const	[txhash, setTxhash] = useState([]);
+        const   [connectWallet, setConnectWallet] = useState(true);
+        const   [deployContract, setDeployContract] = useState(false);
+        const   [approveContract, setApproveContract] = useState(false);
+        const   [payContract, setPayContract] = useState(false);
+        const   [approveEscrowContract, setApproveEscrowContract] = useState(false);
+        const   [paySeller, setPaySeller] = useState(false);
+        const   [networkConnected, setNetworkConnected] = useState();
+        const   [paymentAmount, setPaymentAmount] = useState();
+        const   [erc20ContractAddress, setERC20ContractAddress] = useState();
+        const   [contractAddress, setContractAddress] = useState();
+        const   [address, setAddress] = useState();
+        const   [isConnected, setIsConnected] = useState();
+
 
 const cart = useContext(CartContext);
 
-console.log(cart)
-console.log(cart.sessions)
-
-
-const buttonLabels = ['Connect Wallet', 'Deploy Contract', 'Approve Stablecoin Contract', 'Pay Contract', 'Approve Escrow Contract', 'Pay Seller'];
-
-  // State to keep track of the current button
-  const [currentButton, setCurrentButton] = useState(1);
-
-  // State to keep track of the message
-  const [message, setMessage] = useState('');
-
-  // Event handlers for each button
-  const handleConnectWallet = () => {
-    // Code for connecting wallet
-    setCurrentButton(2);
-  };
-
-  const handleDeployContract = () => {
-    // Code for deploying contract
-    setCurrentButton(3);
-  };
-
-  const handleApproveStableCoinContract = () => {
-    // Code for approving stablecoin contract
-    setCurrentButton(4);
-  };
-
-  const handlePayContract = () => {
-    // Code for paying contract
-    setCurrentButton(5);
-  };
-
-  const handleApproveEscrowContract = () => {
-    // Code for approving escrow contract
-    setCurrentButton(6);
-  };
-
-  const handlePaySeller = () => {
-    // Code for paying seller
-    setMessage('Complete');
-  };
-const buttonLabelPairs = [['Connect Wallet', 'Deploy Contract'], ['Approve Stablecoin Contract', 'Pay Contract'], ['Approve Escrow Contract', 'Pay Seller']];
 
 return (
   <div className="container">
-    {buttonLabelPairs.map((pair, index) => (
+	<ContractContext.Provider value={{connectWallet, setConnectWallet, 
+		deployContract, setDeployContract, 
+		approveContract, setApproveContract,
+                payContract, setPayContract,
+		approveEscrowContract, setApproveEscrowContract,
+		paySeller, setPaySeller,
+		networkConnected, setNetworkConnected,
+		paymentAmount, setPaymentAmount,
+		erc20ContractAddress, setERC20ContractAddress,
+		contractAddress, setContractAddress,
+		address, setAddress,
+		isConnected, setIsConnected,
+	}}>
+
       <div className="row">
-        {pair.map((label, buttonNumber) => (
-		<div className="col-md-4 col-sm-6 text-center">
-  <Button
-    disabled={currentButton !== buttonNumber}
-    variant={currentButton !== buttonNumber ? "secondary" : "primary"}
-    active
-    onClick={buttonNumber === 1 ? handleConnectWallet : buttonNumber === 2 ? handleDeployContract : buttonNumber === 3 ? handleApproveStableCoinContract : buttonNumber === 4 ? handlePayContract : buttonNumber === 5 ? handleApproveEscrowContract : handlePaySeller }
-  >
-    {label}
-  </Button>
-</div>
-        ))}
-      </div>
-    ))}
-    <p>{message}</p>
+  	  <div className="col-md-4 col-sm-6 text-center">
+	{ connectWallet && <ConnectWallet />	}
+	{ !connectWallet && <Button variant="secondary" disabled>Connect Wallet</Button>	}
+	{ deployContract && <DeployContract />	}
+	{ !deployContract && <Button variant="secondary" disabled>Deploy Contract</Button>	}
+	{ approveContract && <ApproveContract />	}
+	{ !approveContract && <Button variant="secondary" disabled>Approve Contract</Button>	}
+	{ payContract && <PayContract />	}
+	{ !payContract && <Button variant="secondary" disabled>Pay Contract</Button>	}
+	{ approveEscrowContract && <ApproveEscrowContract />	}
+	{ !approveEscrowContract && <Button variant="secondary" disabled>Approve Escrow Contract</Button>	}
+	{ paySeller && <PaySeller />	}
+	{ !paySeller & <Button variant="secondary" disabled>Pay Seller</Button>	}
+	</div>
+      </div>      	
+        </ContractContext.Provider>
   </div>
 );
 
 
-}
-
-function ButtonRow({ label, buttonNumber, currentButton, handleConnectWallet, handleDeployContract, handleApproveStableCoinContract, handlePayContract, handleApproveEscrowContract, handlePaySeller }) {
-
-  return (
-    <div className="row">
-      <div className="col-md-4 col-sm-6 text-center">
-        <Button
-          disabled={currentButton !== buttonNumber}
-          variant="default"
-          onClick={buttonNumber === 1 ? handleConnectWallet : buttonNumber === 2 ? handleDeployContract : buttonNumber === 3 ? handleApproveStableCoinContract : buttonNumber === 4 ? handlePayContract : buttonNumber === 5 ? handleApproveEscrowContract : handlePaySeller }
-        >
-          {label}
-        </Button>
-      </div>
-    </div>
-  );
 }
 
 export default Wallet;
