@@ -49,9 +49,9 @@ function Wallet() {
         const network = useNetwork();
 
     useEffect(()=>{
-	if (networkConnected != network) setNetworkConnected(network);
-	if (isConnected != isConnectedAccount) setIsConnected(isConnectedAccount);
-	if (addressAccount != address) setAddress(addressAccount);
+	if (networkConnected !== network) setNetworkConnected(network);
+	if (isConnected !== isConnectedAccount) setIsConnected(isConnectedAccount);
+	if (addressAccount !== address) setAddress(addressAccount);
         setDeployContract(true);
     },[]);
 return (
