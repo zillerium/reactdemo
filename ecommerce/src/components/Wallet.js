@@ -4,7 +4,6 @@ import {Container, Card, Button, Form, Row, Col} from 'react-bootstrap';
 import {CartContext} from '../CartContext';
 import {ContractContext} from './ContractContext';
 import ReactPlayer from 'react-player';
-import ConnectWallet from './ConnectWallet';
 import DeployContract from './DeployContract';
 import ApproveContract from './ApproveContract';
 import PayContract from './PayContract';
@@ -32,7 +31,6 @@ function Wallet() {
         const   [address, setAddress] = useState();
         const   [isConnected, setIsConnected] = useState();
 
-
         const cart = useContext(CartContext);
 
 	const { chains, provider, webSocketProvider } = configureChains(
@@ -50,7 +48,12 @@ function Wallet() {
         const {chain} = useNetwork();
         const network = useNetwork();
 
-
+    useEffect(()=>{
+	if (networkConnected != network) setNetworkConnected(network);
+	if (isConnected != isConnectedAccount) setIsConnected(isConnectedAccount);
+	if (addressAccount != address) setAddress(addressAccount);
+        setDeployContract(true);
+    },[]);
 return (
   <div className="container">
 	<ContractContext.Provider value={{connectWallet, setConnectWallet, 

@@ -1,5 +1,5 @@
 import {Web3Modal, Web3Button} from '@web3modal/react';
-import {useContext, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet } from "wagmi/chains";
 import {WagmiConfig,  useAccount,configureChains, createClient, useNetwork, useConnect, chain} from "wagmi";
 import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum"
@@ -20,6 +20,10 @@ function ConnectWallet() {
                 contractAddress, setContractAddress,
                 address, setAddress,
                 isConnected, setIsConnected } = useContext(ContractContext);
+
+//useEffect(()=> {
+//
+//}, [connectWallet, deployContract, payContract, approveContract, paySeller, networkConnected, paymentAmount, erc20ContractAddress, contractAddress, address, isConnected])
 
 	const { chains, provider, webSocketProvider } = configureChains(
                  [polygonMumbai, goerli, avalanche],

@@ -21,9 +21,26 @@ function DeployContract() {
                 contractAddress, setContractAddress,
                 address, setAddress,
                 isConnected, setIsConnected } = useContext(ContractContext);
+
+	console.log("user address =");
+	console.log(address);
+	const notaries = [{address:'0x9f0BEA7dE67e8Fb333067ed83b468E5082280835'}];
+        const [notary, setNotary]=useState({address:''});
+	console.log("select notary0000000000000000000000000000000000000000000000000", notary);
+//	setNotary(notaries[0]);
   return (
     <div >
 	  <h1>Deploy Contract</h1>
+	  <div>Notary</div>
+          <div>
+               <select className="custom-select form-control" 
+	             value={notary.address} onChange={e=>setNotary(notaries.find(n=>n.address===e.target.value))}>
+                    {notaries.map(n => (
+                        <option key={n.address} value={n.address} >{n.address}</option>
+		    ))}
+
+	       </select>
+	  </div>
     </div>
   );
 }
