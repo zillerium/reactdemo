@@ -6,11 +6,10 @@ import {WagmiConfig,  useAccount,
 import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum"
 import { publicProvider } from 'wagmi/providers/public';
 import {ContractContext} from './ContractContext'
-import {NotaryContext} from './NotaryContext'
 
 function Notary() {
 
- const  {notary, setNotary   } = useContext(NotaryContext);
+ const  {notary, setNotary   } = useContext(ContractContext);
 //
 	//const notaries = [{address:'0x9f0BEA7dE67e8Fb333067ed83b468E5082280835'}];
 	const notaries = [{address:'0x9f0BEA7dE67e8Fb333067ed83b468E5082280835'}];

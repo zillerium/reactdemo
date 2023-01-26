@@ -11,7 +11,7 @@ import {ethers, ContractFactory, utils, BigNumber} from 'ethers';
 import bytecode1 from './bytecode';
 import abi from './abi';
 import {CartContext} from '../CartContext';
-function DeployContract() {
+function ContractShow() {
 
  const  {connectWallet, setConnectWallet,
                 deployContract, setDeployContract, 
@@ -129,4 +129,4 @@ console.log(contractFactory)
   );
 }
 
-export default DeployContract;
+export default ContractShow;

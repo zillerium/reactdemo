@@ -28,8 +28,10 @@ function Wallet() {
         const   [paymentAmount, setPaymentAmount] = useState();
         const   [erc20ContractAddress, setERC20ContractAddress] = useState();
         const   [contractAddress, setContractAddress] = useState();
+        const   [contractDetails, setContractDetails] = useState([{}]);
         const   [address, setAddress] = useState();
         const   [isConnected, setIsConnected] = useState();
+    const [notary, setNotary]=useState({address: ''});
 
         const cart = useContext(CartContext);
 
@@ -66,14 +68,16 @@ return (
 		paymentAmount, setPaymentAmount,
 		erc20ContractAddress, setERC20ContractAddress,
 		contractAddress, setContractAddress,
+		contractDetails, setContractDetails,
 		address, setAddress,
-		isConnected, setIsConnected,
+		isConnected, setIsConnected, notary, setNotary
 	}}>
 
-      <div className="row">
-
        <WagmiConfig client={client}>
+         <div className="row">
+
           <div>
+
              <Web3Modal projectId= "18cf63f918c9aebd18567aabc841a68a"
                   theme="dark"
                   accentColor="default"
@@ -88,8 +92,11 @@ return (
            <div>
                {chain && <div>Network - {chain.name}</div>}
            </div>
-
-
+	</div>
+	<div className="row">
+	    <ContractShow />
+	</div>
+	<div className="row">
   	  <div className="col-md-4 col-sm-6 text-center">
 	{ deployContract && <DeployContract />	}
 	{ !deployContract && <Button variant="secondary" disabled>Deploy Contract</Button>	}
@@ -102,10 +109,8 @@ return (
 	{ paySeller && <PaySeller />	}
 	{ !paySeller & <Button variant="secondary" disabled>Pay Seller</Button>	}
 	</div>
-          </WagmiConfig>
-
-
       </div>      	
+          </WagmiConfig>
         </ContractContext.Provider>
   </div>
 );
