@@ -22,40 +22,35 @@ import { publicProvider } from 'wagmi/providers/public';
 
 
 function WalletInner(props) {
-        const   [connectWallet, setConnectWallet] = useState(true);
         const   [deployContract, setDeployContract] = useState(true);
         const   [approveContract, setApproveContract] = useState(false);
         const   [payContract, setPayContract] = useState(false);
         const   [approveEscrowContract, setApproveEscrowContract] = useState(false);
         const   [paySeller, setPaySeller] = useState(false);
-        const   [networkConnected, setNetworkConnected] = useState();
         const   [paymentAmount, setPaymentAmount] = useState();
         const   [erc20ContractAddress, setERC20ContractAddress] = useState();
         const   [contractAddress, setContractAddress] = useState();
         const   [contractDetails, setContractDetails] = useState([{}]);
-        const   [address, setAddress] = useState();
-        const   [isConnected, setIsConnected] = useState();
-    const [notary, setNotary]=useState({address: ''});
-        const isConnectedWallet = props.isConnected;
+        const   [notary, setNotary]=useState({address: ''});
+        
+	const isConnectedWallet = props.isConnected;
         const payer = props.address;
         const cart = useContext(CartContext);
 
 return (
   <div className="container">
 
-        <ContractContext.Provider value={{connectWallet, setConnectWallet,
+        <ContractContext.Provider value={{
                 deployContract, setDeployContract,
                 approveContract, setApproveContract,
                 payContract, setPayContract,
                 approveEscrowContract, setApproveEscrowContract,
                 paySeller, setPaySeller,
-                networkConnected, setNetworkConnected,
                 paymentAmount, setPaymentAmount,
                 erc20ContractAddress, setERC20ContractAddress,
                 contractAddress, setContractAddress,
                 contractDetails, setContractDetails,
-                address, setAddress,
-                isConnected, setIsConnected, notary, setNotary
+                notary, setNotary
         }}>
 
         <div>

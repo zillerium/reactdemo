@@ -1,5 +1,5 @@
 import {Web3Button} from '@web3modal/react';
-import {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet } from "wagmi/chains";
 import {WagmiConfig,  useAccount,
 	configureChains, createClient,useSigner, useNetwork, useConnect, chain} from "wagmi";
@@ -15,23 +15,25 @@ import {Container, Button, Row, Col, Image, Table} from 'react-bootstrap';
 
 function ContractShow() {
 
- const  {connectWallet, setConnectWallet,
+ const  {
                 deployContract, setDeployContract, 
                 approveContract, setApproveContract,
                 payContract, setPayContract,
                 approveEscrowContract, setApproveEscrowContract,
                 paySeller, setPaySeller,
-                networkConnected, setNetworkConnected,
                 paymentAmount, setPaymentAmount,
                 erc20ContractAddress, setERC20ContractAddress,
                 contractAddress, setContractAddress,
-                address, setAddress,
-                isConnected, setIsConnected,
 	        contractDetails, setContractDetails,
                 notary, setNotary
                 } = useContext(ContractContext);
-console.log("shpw contract details ====");
+console.log("shpw start contract details ====");
 	console.log(contractDetails);
+	console.log(contractAddress);
+console.log("shpw end contract details ====");
+	const [hoverIndex, setHoverIndex]=useState(-1);
+	const handleMouseEnter = (index) => { setHoverIndex(index);}
+	const handleMouseLeave = (index) => { setHoverIndex(-1);}
   return (
     <div >
 
@@ -39,6 +41,7 @@ console.log("shpw contract details ====");
                <Table stripod  bordered hover>
                                             <thead>
                                                  <tr>
+                                                      <th>Hover</th>
                                                       <th>Seller</th>
                                                       <th>Notary</th>
                                                       <th>Contract</th>
@@ -48,12 +51,35 @@ console.log("shpw contract details ====");
                                         <tbody>
                         {contractDetails.length>0 && contractDetails.map((value, key) => {
                                 return (
-                                        <tr>
-                                 <td>    {value.seller}  </td>
-                                 <td>    {value.notary}  </td>
-                                 <td>    {value.contractAddress}  </td>
+					<React.Fragment key={key}>
+					<tr>
+                                 <td onMouseEnter={()=>handleMouseEnter(key)} 
+					onMouseLeave={handleMouseLeave}> More </td>    
+                                 <td
+				>    {value.seller?.substring(0,4)} 
+				 </td>
+				 <td>    {value.notary?.substring(0,4)}  </td>
+                                 <td> <a href={`https://mumbai.polygonscan.com/address/${value.contractAddress}`} target="_blank">
+					{value.contractAddress?.substring(0,4)}</a>  </td>
                                  <td>    ${value.totalAmount?.toFixed(2)}  </td>
                                         </tr>
+				              {hoverIndex === key && (
+						      <tr>
+						      <td>More
+						      </td>
+						                                             <td  className="popup">
+
+						                                                 {value.seller}
+						                                                </td>
+
+				 <td>    {value.notary}  </td>
+                                 <td> {value.contractAddress}  </td>
+                                 <td>    ${value.totalAmount?.toFixed(2)}  </td>
+                                                       </tr>
+
+						                                        )}
+
+					</React.Fragment>
                                 )
                         })}
                                        </tbody>

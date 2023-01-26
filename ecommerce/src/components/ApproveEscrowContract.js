@@ -9,18 +9,18 @@ import {ContractContext} from './ContractContext'
 
 function ApproveEscrowContract() {
 
- const  {connectWallet, setConnectWallet,
-                deployContract, setDeployContract, 
+	 const  {
+                deployContract, setDeployContract,
                 approveContract, setApproveContract,
                 payContract, setPayContract,
                 approveEscrowContract, setApproveEscrowContract,
                 paySeller, setPaySeller,
-                networkConnected, setNetworkConnected,
                 paymentAmount, setPaymentAmount,
                 erc20ContractAddress, setERC20ContractAddress,
                 contractAddress, setContractAddress,
-                address, setAddress,
-                isConnected, setIsConnected } = useContext(ContractContext);
+                contractDetails, setContractDetails,
+                notary, setNotary
+                } = useContext(ContractContext)
   return (
     <div >
 	  <h1>Approve Escrow Contract</h1>

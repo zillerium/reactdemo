@@ -13,18 +13,15 @@ import abi from './abi';
 import {CartContext} from '../CartContext';
 function DeployContract() {
 
- const  {connectWallet, setConnectWallet,
+ const  {
                 deployContract, setDeployContract, 
                 approveContract, setApproveContract,
                 payContract, setPayContract,
                 approveEscrowContract, setApproveEscrowContract,
                 paySeller, setPaySeller,
-                networkConnected, setNetworkConnected,
                 paymentAmount, setPaymentAmount,
                 erc20ContractAddress, setERC20ContractAddress,
                 contractAddress, setContractAddress,
-                address, setAddress,
-                isConnected, setIsConnected,
 	        contractDetails, setContractDetails,
                 notary, setNotary
                 } = useContext(ContractContext);
@@ -64,7 +61,6 @@ function DeployContract() {
         const contractFactory = new ethers.ContractFactory(abi, bytecode1, signer);
 console.log(contractFactory)
 	console.log("deploy contract user address ===========================");
-	console.log(address);
   //  useEffect(()=>{
 //	console.log("deploy contract notary *****************************************");
 //	console.log(notary);
@@ -87,7 +83,8 @@ console.log(contractFactory)
                  const aSeller = sellers[sellerAddress];
 	//	  thisSeller = aSeller.seller;
 		   const contractDetails1 = {seller: aSeller.seller, totalAmount: aSeller.totalAmount, 
-			   notary: notary.address, buyer:address, contractAddress: '0x0'};
+			   notary: notary.address ,  contractAddress: '0x0'};
+			   //notary:'0x0' notary.address, buyer:address, contractAddress: '0x0'};
 	//	   console.log(aSeller);
 		   arrayContracts.push(contractDetails1);  
 		  //  console.log(maticAmount, aSeller.seller, notary.address, salesRelease, disputeRelease);
@@ -102,7 +99,9 @@ console.log(contractFactory)
 	//	  const contractresolved = await Promise.all(contract);
           } catch (error) {
              console.log(error);
+	  
 	  }
+	    const contractArrayLocal = [];
              for (let i=0;i<arrayContracts.length; i++) { 
 		     console.log("vars -----");
 		     console.log(arrayContracts[i].seller);
@@ -114,16 +113,19 @@ console.log(contractFactory)
 		  console.log("resolved =====");
 		  console.log(contract);
 		  if (contract) arrayContracts[i].contractAddress = contract.address;
-		  setContractDetails(...contractDetails, arrayContracts[i]);
+		     //console.log(contractdetails)
+		     console.log(arrayContracts[i])
+		  contractArrayLocal.push(arrayContracts[i]);
                   console.log("contract address *********************", contract.address);
-                  setERC20ContractAddress(contract.address);
+                  setContractAddress(contract.address);
                   setApproveContract(true);
                   setDeployContract(false);
 
 	     }
 	     
+		  setContractDetails(contractArrayLocal);
              console.log("deploy end")
-	    console.log(arrayContracts);
+	    console.log(contractArrayLocal);
 
            //setContractAddress(contract.address);
         }

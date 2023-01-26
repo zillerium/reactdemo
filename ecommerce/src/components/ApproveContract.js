@@ -11,18 +11,18 @@ import abi from './abi';
 
 function ApproveContract() {
 
- const  {connectWallet, setConnectWallet,
-                deployContract, setDeployContract, 
+	 const  {
+                deployContract, setDeployContract,
                 approveContract, setApproveContract,
                 payContract, setPayContract,
                 approveEscrowContract, setApproveEscrowContract,
                 paySeller, setPaySeller,
-                networkConnected, setNetworkConnected,
                 paymentAmount, setPaymentAmount,
                 erc20ContractAddress, setERC20ContractAddress,
                 contractAddress, setContractAddress,
-                address, setAddress,
-                isConnected, setIsConnected } = useContext(ContractContext);
+                contractDetails, setContractDetails,
+                notary, setNotary
+                } = useContext(ContractContext)
 // this handles just one seller now, but this should be an array to handle all sellers
   const {config, error} = usePrepareContractWrite({
                    address: contractAddress,
