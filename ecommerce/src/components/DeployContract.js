@@ -52,16 +52,23 @@ function DeployContract() {
         const salesRelease = Math.floor(Date.now() / 1000);
         const disputeRelease = salesRelease + 100; // 100 secs for testing
 
-        const {data: signer, isError, isLoading} = useSigner();
-        console.log("signer", signer);
+        const {data: signer, isError, isLoading} = useSigner({
+             onError(error) {
+		     console.log('error', error)
+	     },
+	})
+
+
+        if (isLoading) return (<h1>loading ...</h1>); else console.log("signer", signer);
+        if (isError) console.log("error == ");
         const contractFactory = new ethers.ContractFactory(abi, bytecode1, signer);
 console.log(contractFactory)
 	console.log("deploy contract user address ===========================");
 	console.log(address);
-    useEffect(()=>{
-	console.log("deploy contract notary *****************************************");
-	console.log(notary);
-    },[notary]);
+  //  useEffect(()=>{
+//	console.log("deploy contract notary *****************************************");
+//	console.log(notary);
+ //   },[notary]);
 
     const HandleDeploy= async ()=> {
 	    console.log("button cliecked ============================");
@@ -79,9 +86,10 @@ console.log(contractFactory)
             const contract = await (Object.keys(sellers).map(async sellerAddress => {
                  const aSeller = sellers[sellerAddress];
 	//	  thisSeller = aSeller.seller;
-		   const contractDetails = {seller: aSeller.seller, totalAmount: aSeller.totalAmount, notary: notary.address, buyer:address, contract: ''};
+		   const contractDetails1 = {seller: aSeller.seller, totalAmount: aSeller.totalAmount, 
+			   notary: notary.address, buyer:address, contractAddress: '0x0'};
 	//	   console.log(aSeller);
-		   arrayContracts.push(contractDetails);  
+		   arrayContracts.push(contractDetails1);  
 		  //  console.log(maticAmount, aSeller.seller, notary.address, salesRelease, disputeRelease);
                 //    await contractFactory.deploy(sellers[sellerAddress].seller, notary.address, salesRelease, disputeRelease);
                  //  {value: maticAmount});
@@ -96,11 +104,16 @@ console.log(contractFactory)
              console.log(error);
 	  }
              for (let i=0;i<arrayContracts.length; i++) { 
+		     console.log("vars -----");
+		     console.log(arrayContracts[i].seller);
+		     console.log(notary.address);
+		     console.log(contractFactory);
+		    
 	          const contract = await contractFactory.deploy(arrayContracts[i].seller, notary.address, salesRelease, disputeRelease);
 
 		  console.log("resolved =====");
 		  console.log(contract);
-		  arrayContracts[i].contract = contract;
+		  if (contract) arrayContracts[i].contractAddress = contract.address;
 		  setContractDetails(...contractDetails, arrayContracts[i]);
                   console.log("contract address *********************", contract.address);
                   setERC20ContractAddress(contract.address);
