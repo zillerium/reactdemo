@@ -11,6 +11,8 @@ import {ethers, ContractFactory, utils, BigNumber} from 'ethers';
 import bytecode1 from './bytecode';
 import abi from './abi';
 import {CartContext} from '../CartContext';
+import {Container, Card, Button, Form, Row, Col} from 'react-bootstrap';
+
 function DeployContract() {
 
  const  {
@@ -135,10 +137,14 @@ console.log(contractFactory)
 //	setNotary(notaries[0]);
   return (
     <div >
-
-	  <h1>Deploy Contract</h1>
-	  <Notary />
-	     <button onClick={HandleDeploy}>Deploy</button> 
+        <div className="row">
+             <div className="col-4 text-center">
+	        <Button variant="primary" onClick={HandleDeploy}>1. Create Contract</Button> 
+            </div>
+             <div className="col-8 text-center">
+	         <Notary />
+            </div>
+        </div>
 
     </div>
   );

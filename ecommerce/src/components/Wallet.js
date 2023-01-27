@@ -56,10 +56,8 @@ return (
 
         <div>
 	  <div className="row">
-  	     <div className="col-md-4 col-sm-6 text-center">
 	           <WalletInner isConnected={isConnected} address={address}/>
 
-	     </div>
          </div>
 	</div>
           </WagmiConfig>

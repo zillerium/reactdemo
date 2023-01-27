@@ -38,8 +38,7 @@ function Notary() {
 
 	       </select></div>)}
 	  </div>
-	  <h2>Notary</h2>
-	  {notary.address}
+	  <b>Notary  {notary.address}</b>
     </div>
   );
 }

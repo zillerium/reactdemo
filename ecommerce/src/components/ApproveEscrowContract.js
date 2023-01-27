@@ -2,10 +2,13 @@ import {Web3Button} from '@web3modal/react';
 import {useContext, useState} from 'react'
 import {goerli,polygonMumbai, avalancheFuji, avalanche, polygon,mainnet } from "wagmi/chains";
 import {WagmiConfig,  useAccount,
-	configureChains, createClient, useNetwork, useConnect, chain} from "wagmi";
+        configureChains, createClient, useNetwork, useConnect, chain, useContractWrite, usePrepareContractWrite} from "wagmi";
 import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal/ethereum"
 import { publicProvider } from 'wagmi/providers/public';
 import {ContractContext} from './ContractContext'
+import bytecode1 from './bytecode';
+
+import abi from './abi';
 
 function ApproveEscrowContract() {
 
@@ -21,11 +24,49 @@ function ApproveEscrowContract() {
                 contractDetails, setContractDetails,
                 notary, setNotary
                 } = useContext(ContractContext)
-  return (
-    <div >
-	  <h1>Approve Escrow Contract</h1>
-    </div>
-  );
+        let totAmount = contractDetails.reduce((total,item)=>total+item.totalAmount,0);
+  totAmount = totAmount * (10 ** 6);
+
+  const {config, error} = usePrepareContractWrite({
+                   address: contractAddress,
+          abi: abi,
+          functionName: 'approveContractTransfer',
+          args:[totAmount]
+  })
+console.log(config);
+                const {data, isLoading, isSuccess, write} = useContractWrite(config)
+        if (isLoading) {
+             return <div>Loading ...</div>
+        }
+        console.log(data)
+
+	 if (isSuccess) {
+     setPayContract(true);
+         setApproveEscrowContract(false);
+ }
+
+
+
+
+    return (
+        <>
+        <div><button disabled={!write} onClick={()=>write?.()}>Approve contract to pay {paymentAmount}</button></div>
+            {error && (<div> error in formatting {error.message} </div>)}
+   <div><p>contract approval to pay=   at address {contractAddress}</p></div>
+        </>
+    )
+
 }
+
+
+
+
+
+
+
+
+
+
+
 
 export default ApproveEscrowContract;

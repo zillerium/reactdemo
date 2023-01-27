@@ -7,7 +7,9 @@ import {EthereumClient, modalConnectors, walletConnectProvider} from "@web3modal
 import { publicProvider } from 'wagmi/providers/public';
 import {ContractContext} from './ContractContext'
 import bytecode1 from './bytecode';
-import abi from './abi';
+
+import abierc20 from './abierc20';
+import {Container, Card, Button, Form, Row, Col} from 'react-bootstrap';
 
 function ApproveContract() {
 
@@ -23,12 +25,24 @@ function ApproveContract() {
                 contractDetails, setContractDetails,
                 notary, setNotary
                 } = useContext(ContractContext)
+
+	console.log("contract debug details ====== ");
+	console.log(contractDetails);
+//Object.keys(contractDetails).map(item=>{
+//	console.log("item == ", item);
+//totAmount += item.totalAmount;
+//
+//})
+	let totAmount = contractDetails.reduce((total,item)=>total+item.totalAmount,0);
+	totAmount = totAmount * (10 ** 6);
+console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+console.log("tot", totAmount, contractAddress, erc20ContractAddress);
 // this handles just one seller now, but this should be an array to handle all sellers
   const {config, error} = usePrepareContractWrite({
-                   address: contractAddress,
-          abi: abi,
-          functionName: 'approveContractTransfer',
-          args:[paymentAmount]
+                   address: erc20ContractAddress,
+          abi: abierc20,
+          functionName: 'approve',
+          args:[contractAddress, totAmount]
   })
 
 const {data, isLoading, isSuccess, write} = useContractWrite(config)
@@ -37,14 +51,15 @@ const {data, isLoading, isSuccess, write} = useContractWrite(config)
 	}
 	console.log(data)
 
-
+ if (isSuccess) {
+     setApproveEscrowContract(true);
+	 setApproveContract(false);
+ }
 
 	return (
     <div >
-	  <h1>Approve Contract</h1>
-		        <div><button disabled={!write} onClick={()=>write?.()}>Approve contract to pay {paymentAmount}</button></div>
+		        <div><Button variant="primary" disabled={!write} onClick={()=>write?.()}>Approve contract to pay {paymentAmount}</Button></div>
             {error && (<div> error in formatting {error.message} </div>)}
-   <div><p>contract approval to pay=   at address {contractAddress}</p></div>
 
     </div>
   );
